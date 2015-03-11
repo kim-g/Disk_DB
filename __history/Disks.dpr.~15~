@@ -1,0 +1,30 @@
+program Disks;
+
+uses
+  Vcl.Forms,
+  MenuUnit in 'MenuUnit.pas' {Form1},
+  SearchUnit in 'SearchUnit.pas' {SearchForm},
+  ChangeGot in 'ChangeGot.pas' {GetDisk},
+  AdminUnit in 'AdminUnit.pas' {AdminForm},
+  AddTitle in 'AddTitle.pas' {AddTitleForm},
+  AddVideo in 'AddVideo.pas' {AddVideoForm},
+  AddDisk in 'AddDisk.pas' {AddDiskForm},
+  PersUnit in 'PersUnit.pas' {Persons},
+  PersListUnit in 'PersListUnit.pas' {PersList};
+
+{$R *.res}
+
+begin
+  Application.Initialize;
+  Application.MainFormOnTaskbar := True;
+  Application.CreateForm(TForm1, Form1);
+  Application.CreateForm(TSearchForm, SearchForm);
+  Application.CreateForm(TGetDisk, GetDisk);
+  Application.CreateForm(TAdminForm, AdminForm);
+  Application.CreateForm(TAddTitleForm, AddTitleForm);
+  Application.CreateForm(TAddVideoForm, AddVideoForm);
+  Application.CreateForm(TAddDiskForm, AddDiskForm);
+  Application.CreateForm(TPersons, Persons);
+  Application.CreateForm(TPersList, PersList);
+  Application.Run;
+end.

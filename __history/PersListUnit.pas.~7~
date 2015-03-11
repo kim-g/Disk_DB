@@ -1,0 +1,53 @@
+unit PersListUnit;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Data.DB, Data.Win.ADODB, Vcl.ExtCtrls,
+  Vcl.Grids, Vcl.DBGrids;
+
+type
+  TPersList = class(TForm)
+    Panel1: TPanel;
+    Panel2: TPanel;
+    Panel3: TPanel;
+    Query: TADOQuery;
+    DataSource1: TDataSource;
+    DBGrid1: TDBGrid;
+  private
+    { Private declarations }
+  public
+    procedure ShowPerson(ID:Integer; Person: string);
+  end;
+
+var
+  PersList: TPersList;
+
+implementation
+
+{$R *.dfm}
+
+uses MenuUnit;
+
+{ TPersList }
+
+procedure TPersList.ShowPerson(ID: Integer; Person: string);
+begin
+Panel2.Caption:=Person;
+with Query do
+  begin
+  SQL.Clear;
+  SQL.Add('SELECT [Номер в каталоге], Сюжеты.Название, Дата_Взятия');
+  SQL.Add('FROM Список_Дисков');
+  SQL.Add('  INNER JOIN (Видеозаписи');
+  SQL.Add('    INNER JOIN Сюжеты');
+  SQL.Add('    ON Видеозаписи.Сюжет = Сюжеты.ID_Сюжета)');
+  SQL.Add('  ON Список_Дисков.Видеозапись = Видеозаписи.ID_Видеозаписи');
+  SQL.Add('WHERE Список_Дисков.Взят = ' + IntToStr(ID));
+  Open;
+  end;
+ShowModal;
+end;
+
+end.

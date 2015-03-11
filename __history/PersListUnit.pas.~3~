@@ -1,0 +1,31 @@
+unit PersListUnit;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Data.DB, Data.Win.ADODB, Vcl.ExtCtrls,
+  Vcl.Grids, Vcl.DBGrids;
+
+type
+  TPersList = class(TForm)
+    Panel1: TPanel;
+    Panel2: TPanel;
+    Panel3: TPanel;
+    Query: TADOQuery;
+    DataSource1: TDataSource;
+    DBGrid1: TDBGrid;
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  PersList: TPersList;
+
+implementation
+
+{$R *.dfm}
+
+end.

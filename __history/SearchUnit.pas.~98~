@@ -1,0 +1,258 @@
+unit SearchUnit;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Data.DB, Data.Win.ADODB, Vcl.ExtCtrls,
+  Vcl.StdCtrls, Vcl.DBCtrls, Vcl.Grids, Vcl.DBGrids, Data.Bind.EngExt,
+  Vcl.Bind.DBEngExt, System.Rtti, System.Bindings.Outputs, Vcl.Bind.Editors,
+  Data.Bind.Components, Data.Bind.DBScope;
+
+type
+  TWindowState = record
+    Left:integer;
+    Top:Integer;
+    Width:Integer;
+    Height:Integer;
+    Maximize:Boolean;
+  end;
+  TSearchForm = class(TForm)
+    ListPanel: TPanel;
+    SearchPanel: TPanel;
+    DataSource: TDataSource;
+    AccessQuery: TADOQuery;
+    DBGrid1: TDBGrid;
+    Order: TRadioGroup;
+    Panel1: TPanel;
+    Label1: TLabel;
+    NDiskEdit: TEdit;
+    Label2: TLabel;
+    SpName: TDataSource;
+    SpQuery: TADOQuery;
+    DiskName: TEdit;
+    GroupBox1: TGroupBox;
+    Panel2: TPanel;
+    CheckBox1: TCheckBox;
+    CheckBox2: TCheckBox;
+    CheckBox3: TCheckBox;
+    CheckBox4: TCheckBox;
+    CheckBox5: TCheckBox;
+    CheckBox6: TCheckBox;
+    CheckBox7: TCheckBox;
+    CheckBox8: TCheckBox;
+    CheckBox9: TCheckBox;
+    CheckBox10: TCheckBox;
+    Button1: TButton;
+    Button2: TButton;
+    Panel3: TPanel;
+    Button3: TButton;
+    procedure FormCreate(Sender: TObject);
+    procedure Button1Click(Sender: TObject);
+    procedure NDiskEditChange(Sender: TObject);
+    procedure OrderClick(Sender: TObject);
+    procedure FormResize(Sender: TObject);
+    procedure FormCanResize(Sender: TObject; var NewWidth, NewHeight: Integer;
+      var Resize: Boolean);
+    procedure Button2Click(Sender: TObject);
+    procedure DBGrid1DblClick(Sender: TObject);
+    procedure Button3Click(Sender: TObject);
+  private
+    procedure UpdateTable;
+
+  public
+    procedure SearchShow;
+  end;
+
+var
+  SearchForm: TSearchForm;
+  SQL_Query:TStringList;
+  GridColWith: array [0..9] of word = (0, 40, 140, 210, 40, 90, 140, 70, 130, 70);    // -30-20-30
+  Cat:array [1..10] of TCheckBox;
+  WS:TWindowState;
+
+
+const
+  AllOther = 767;
+  Common_SQL_Query:array[1..18] of String =
+    ('SELECT Список_Дисков.ID_Диска, Список_Дисков.[Номер в каталоге], Категории.Категория, Сюжеты.Название,',
+     '       Видеозаписи.Номер_Спектакля, Видеозаписи.Дата_Спектакля, МестоНаПолке.[Место на полке],',
+     '       Видеозаписи.Комментарий, [Члены труппы].Фамилия, Список_Дисков.Дата_Взятия',
+     '',
+     'FROM [Члены труппы]',
+     'INNER JOIN (Сюжеты',
+     '  INNER JOIN (МестоНаПолке',
+     '    INNER JOIN (Категории',
+     '      INNER JOIN (Видеозаписи',
+     '        INNER JOIN Список_Дисков ON Видеозаписи.ID_Видеозаписи = Список_Дисков.Видеозапись)',
+     '      ON Категории.ID = Видеозаписи.Категория)',
+     '    ON МестоНаПолке.ID = Видеозаписи.Место_на_полке)',
+     '  ON Сюжеты.ID_Сюжета = Видеозаписи.Сюжет)',
+     'ON [Члены труппы].[Табельный номер] = Список_Дисков.Взят',
+     '',
+     'WHERE (FALSE',
+     '',
+     'ORDER BY ');
+
+  GridColNames: array [0..9] of string = ('ID', '№', 'Категория', 'Название', 'n', 'Дата', 'Место',
+                                          'Комментарий', 'Взял', 'Дата');
+  OrderBy:array[0..3] of string = ('[Номер в каталоге]','Сюжеты.Название, Видеозаписи.Номер_Спектакля',
+                                   'Видеозаписи.Категория','[Члены труппы].Фамилия');
+
+implementation
+
+{$R *.dfm}
+
+uses MenuUnit, ChangeGot;
+
+{ TSearchForm }
+
+procedure TSearchForm.Button1Click(Sender: TObject);
+var
+  I: Integer;
+begin
+for I := 1 to 10 do
+  Cat[i].Checked:=true;
+UpdateTable;
+end;
+
+procedure TSearchForm.Button2Click(Sender: TObject);
+var
+  I: Integer;
+begin
+for I := 1 to 10 do
+  Cat[i].Checked:=false;
+UpdateTable;
+end;
+
+procedure TSearchForm.Button3Click(Sender: TObject);
+begin
+Form1.AddDisk;
+UpdateTable;
+end;
+
+procedure TSearchForm.DBGrid1DblClick(Sender: TObject);
+var
+  N:Cardinal;
+begin
+N:=DBGrid1.DataSource.DataSet.FieldValues['ID_Диска'];
+GetDisk.GetDisk(N);
+ACCESSQuery.Requery;
+end;
+
+procedure TSearchForm.FormCanResize(Sender: TObject; var NewWidth,
+  NewHeight: Integer; var Resize: Boolean);
+begin
+if NewWidth<1000 then NewWidth:=1000;
+if NewHeight<400 then NewHeight:=400;
+end;
+
+procedure TSearchForm.FormCreate(Sender: TObject);
+begin
+SQL_Query:=TStringList.Create;
+Cat[CheckBox1.Tag]:=CheckBox1;
+Cat[CheckBox2.Tag]:=CheckBox2;
+Cat[CheckBox3.Tag]:=CheckBox3;
+Cat[CheckBox4.Tag]:=CheckBox4;
+Cat[CheckBox5.Tag]:=CheckBox5;
+Cat[CheckBox6.Tag]:=CheckBox6;
+Cat[CheckBox7.Tag]:=CheckBox7;
+Cat[CheckBox8.Tag]:=CheckBox8;
+Cat[CheckBox9.Tag]:=CheckBox9;
+Cat[CheckBox10.Tag]:=CheckBox10;
+end;
+
+procedure TSearchForm.FormResize(Sender: TObject);
+var
+  i:byte;
+begin
+if DBGrid1.Width<964 then       //930 D=47 DD=687
+  begin
+  GridColWith[3]:=197;
+  end
+ else
+  begin
+  GridColWith[3]:=DBGrid1.Width - AllOther;
+  end;
+for i := 0 to 9 do
+  begin
+  DBGrid1.Columns[i].Width:=GridColWith[i];    // Изменение размеров
+  end;
+
+WS.Left:=Left;
+WS.Top:=Top;
+WS.Height:=Height;
+WS.Width:=Width;
+WS.Maximize:=WindowState=wsMaximized;
+
+Settings.WriteInteger('Forms','Search-Left',WS.Left);
+Settings.WriteInteger('Forms','Search-Top',WS.Top);
+Settings.WriteInteger('Forms','Search-Width',WS.Width);
+Settings.WriteInteger('Forms','Search-Height',WS.Height);
+Settings.WriteBool('Forms','Search-Maximize',WS.Maximize);
+end;
+
+procedure TSearchForm.NDiskEditChange(Sender: TObject);
+begin
+UpdateTable;
+end;
+
+procedure TSearchForm.OrderClick(Sender: TObject);
+begin
+UpdateTable;
+end;
+
+procedure TSearchForm.SearchShow;
+begin
+UpdateTable;
+Left:=WS.Left;
+Top:=WS.Top;
+SearchForm.Height:=WS.Height;
+SearchForm.Width:=WS.Width;
+Show;
+{if WS.Maximize
+  then ShowWindow(Handle, SW_SHOWMAXIMIZED)
+  else ShowWindow(Handle, SW_SHOW); } //Доделать потом!!!
+
+end;
+
+procedure TSearchForm.UpdateTable;
+var
+  i: Integer;
+begin
+//Очищаем от предыдущего запроса
+SQL_Query.Clear;
+
+//Добавляем SELECT, FROMби начало WHERE
+for i := 1 to 16 do
+  SQL_Query.Add(Common_SQL_Query[i]);
+
+//Доюавляем условие по категории
+for I := 1 to 10 do
+  if Cat[i].Checked then SQL_Query.Add('    OR Видеозаписи.Категория = '+IntToStr(i)+'');  //Проверяем флажки
+
+SQL_Query[SQL_Query.Count-1]:=SQL_Query[SQL_Query.Count-1]+')';  //Закрываем скобку
+//Добавлем условия по номеру и заголовку
+if NDiskEdit.Text<>'' then
+  SQL_Query.Add('  AND ([Номер в каталоге]='+NDiskEdit.Text+')');
+if DiskName.Text<>'' then
+  SQL_Query.Add('  AND (Сюжеты.Название Like '+#39+'%'+DiskName.Text+'%'+#39+')');
+
+//Добавляем ORDER BY
+SQL_Query.Add(Common_SQL_Query[17]);
+SQL_Query.Add(Common_SQL_Query[18] + OrderBy[Order.ItemIndex] + ';');
+
+AccessQuery.SQL.Assign(SQL_Query);
+AccessQuery.Active:=true;
+
+for i := 0 to 9 do
+  begin
+  DBGrid1.Columns[i].Title.Caption:=GridColNames[i];   // Изменение заголовков
+  DBGrid1.Columns[i].Width:=GridColWith[i];            // и размеров.
+  DBGrid1.Columns[i].ReadOnly:=true;                   // Запрещаем изменять значения.
+  end;
+
+//SQL_Query.SaveToFile('SQL.log');    //Сохранение лога запроса. Убрать до релиза.
+end;
+
+end.

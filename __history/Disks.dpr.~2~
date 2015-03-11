@@ -1,0 +1,16 @@
+program Disks;
+
+uses
+  Vcl.Forms,
+  MenuUnit in 'MenuUnit.pas' {Form1},
+  SearchUnit in 'SearchUnit.pas' {SearchForm};
+
+{$R *.res}
+
+begin
+  Application.Initialize;
+  Application.MainFormOnTaskbar := True;
+  Application.CreateForm(TForm1, Form1);
+  Application.CreateForm(TSearchForm, SearchForm);
+  Application.Run;
+end.

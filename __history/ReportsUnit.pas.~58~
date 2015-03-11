@@ -1,0 +1,330 @@
+unit ReportsUnit;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Data.DB, frxClass, frxDBSet,
+  Data.Win.ADODB, frxDesgn, Vcl.StdCtrls, frxPreview;
+
+type
+  TReports = class(TForm)
+    ReportNum: TfrxReport;
+    FRDataSet: TfrxDBDataset;
+    QueryNum: TADOQuery;
+    Button1: TButton;
+    Button2: TButton;
+    QuerySP: TADOQuery;
+    DataSetSP: TfrxDBDataset;
+    ReportSP: TfrxReport;
+    Button3: TButton;
+    Button4: TButton;
+    Button5: TButton;
+    Button6: TButton;
+    QueryMS: TADOQuery;
+    DataSetMS: TfrxDBDataset;
+    ReportMS: TfrxReport;
+    Button7: TButton;
+    Button8: TButton;
+    QueryFilms: TADOQuery;
+    DataSetFilms: TfrxDBDataset;
+    ReportFilms: TfrxReport;
+    Button9: TButton;
+    Button10: TButton;
+    QueryMusic: TADOQuery;
+    DataSetMusic: TfrxDBDataset;
+    ReportMusic: TfrxReport;
+    Button11: TButton;
+    Button12: TButton;
+    Button13: TButton;
+    Button14: TButton;
+    Button15: TButton;
+    Button16: TButton;
+    Button17: TButton;
+    Button18: TButton;
+    ReportPhoto: TfrxReport;
+    DataSetPhoto: TfrxDBDataset;
+    QueryPhoto: TADOQuery;
+    QueryNP: TADOQuery;
+    DataSetNP: TfrxDBDataset;
+    ReportNP: TfrxReport;
+    QueryBooks: TADOQuery;
+    DataSetBooks: TfrxDBDataset;
+    ReportBooks: TfrxReport;
+    QueryStD: TADOQuery;
+    DataSetStD: TfrxDBDataset;
+    ReportStD: TfrxReport;
+    Button19: TButton;
+    Button20: TButton;
+    QueryPers: TADOQuery;
+    DataSetPers: TfrxDBDataset;
+    ReportPers: TfrxReport;
+    Button21: TButton;
+    Button22: TButton;
+    QueryOther: TADOQuery;
+    DataSetOther: TfrxDBDataset;
+    ReportOther: TfrxReport;
+    Button23: TButton;
+    Query: TADOQuery;
+    procedure Button1Click(Sender: TObject);
+    procedure Button2Click(Sender: TObject);
+    procedure Button3Click(Sender: TObject);
+    procedure Button4Click(Sender: TObject);
+    procedure Button5Click(Sender: TObject);
+    procedure Button6Click(Sender: TObject);
+    procedure Button9Click(Sender: TObject);
+    procedure Button10Click(Sender: TObject);
+    procedure Button7Click(Sender: TObject);
+    procedure Button8Click(Sender: TObject);
+    procedure Button11Click(Sender: TObject);
+    procedure Button12Click(Sender: TObject);
+    procedure Button13Click(Sender: TObject);
+    procedure Button14Click(Sender: TObject);
+    procedure Button15Click(Sender: TObject);
+    procedure Button16Click(Sender: TObject);
+    procedure Button17Click(Sender: TObject);
+    procedure Button18Click(Sender: TObject);
+    procedure Button19Click(Sender: TObject);
+    procedure Button20Click(Sender: TObject);
+    procedure Button21Click(Sender: TObject);
+    procedure Button22Click(Sender: TObject);
+    procedure Button23Click(Sender: TObject);
+    procedure RemNum;
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  Reports: TReports;
+
+implementation
+
+{$R *.dfm}
+
+uses MenuUnit;
+
+procedure TReports.Button10Click(Sender: TObject);
+begin
+QueryMusic.Open;
+ReportMusic.PrepareReport;
+ReportMusic.Print;
+end;
+
+procedure TReports.Button11Click(Sender: TObject);
+begin
+QueryPhoto.Open;
+ReportPhoto.ShowReport;
+end;
+
+procedure TReports.Button12Click(Sender: TObject);
+begin
+QueryPhoto.Open;
+ReportPhoto.PrepareReport;
+ReportPhoto.Print;
+end;
+
+procedure TReports.Button13Click(Sender: TObject);
+begin
+QueryNP.Open;
+ReportNP.ShowReport;
+end;
+
+procedure TReports.Button14Click(Sender: TObject);
+begin
+QueryNP.Open;
+ReportNP.PrepareReport;
+ReportNP.Print;
+end;
+
+procedure TReports.Button15Click(Sender: TObject);
+begin
+QueryBooks.Open;
+ReportBooks.ShowReport;
+end;
+
+procedure TReports.Button16Click(Sender: TObject);
+begin
+QueryBooks.Open;
+ReportBooks.PrepareReport;
+ReportBooks.Print;
+end;
+
+procedure TReports.Button17Click(Sender: TObject);
+begin
+QueryStD.Open;
+ReportStD.ShowReport;
+end;
+
+procedure TReports.Button18Click(Sender: TObject);
+begin
+QueryStD.Open;
+ReportStD.PrepareReport;
+ReportStD.Print;
+end;
+
+procedure TReports.Button19Click(Sender: TObject);
+begin
+QueryPers.Open;
+ReportPers.ShowReport;
+end;
+
+procedure TReports.Button1Click(Sender: TObject);
+begin
+QueryNum.Open;
+ReportNum.DesignReport;
+ReportNum.ShowReport;         //<frxDBDataset1."Название"> + ' (' + <frxDBDataset1."Комментарий"> + ')'
+
+end;
+
+procedure TReports.Button20Click(Sender: TObject);
+begin
+QueryPers.Open;
+ReportPers.PrepareReport;
+ReportPers.Print;
+end;
+
+procedure TReports.Button21Click(Sender: TObject);
+begin
+QueryOther.Open;
+ReportOther.ShowReport;
+end;
+
+procedure TReports.Button22Click(Sender: TObject);
+begin
+QueryOther.Open;
+ReportOther.PrepareReport;
+ReportOther.Print;
+end;
+
+procedure TReports.Button23Click(Sender: TObject);
+begin
+
+ShowMessage('Вставьте белую бумагу');
+QueryNum.Open;
+ReportNum.PrepareReport;
+//ReportSP //
+ReportNum.Print;
+
+ShowMessage('Вставьте цветную бумагу');
+QuerySP.Open;
+ReportSP.PrepareReport;
+ReportSP.PrintOptions.ShowDialog:=false;
+ReportSP.Print;
+
+ShowMessage('Вставьте белую бумагу');
+QueryMS.Open;
+ReportMS.PrepareReport;
+ReportMS.PrintOptions.ShowDialog:=false;
+ReportMS.Print;
+
+QueryFilms.Open;
+ReportFilms.PrepareReport;
+ReportFilms.PrintOptions.ShowDialog:=false;
+ReportFilms.Print;
+
+QueryMusic.Open;
+ReportMusic.PrepareReport;
+ReportMusic.PrintOptions.ShowDialog:=false;
+ReportMusic.Print;
+
+QueryPhoto.Open;
+ReportPhoto.PrepareReport;
+ReportPhoto.PrintOptions.ShowDialog:=false;
+ReportPhoto.Print;
+
+QueryNP.Open;
+ReportNP.PrepareReport;
+ReportNP.PrintOptions.ShowDialog:=false;
+ReportNP.Print;
+
+QueryBooks.Open;
+ReportBooks.PrepareReport;
+ReportBooks.PrintOptions.ShowDialog:=false;
+ReportBooks.Print;
+
+QueryStD.Open;
+ReportStD.PrepareReport;
+ReportStD.PrintOptions.ShowDialog:=false;
+ReportStD.Print;
+
+QueryPers.Open;
+ReportPers.PrepareReport;
+ReportPers.PrintOptions.ShowDialog:=false;
+ReportPers.Print;
+
+QueryOther.Open;
+ReportOther.PrepareReport;
+ReportOther.PrintOptions.ShowDialog:=false;
+ReportOther.Print;
+end;
+
+procedure TReports.Button2Click(Sender: TObject);
+begin
+QueryNum.Open;
+ReportNum.PrepareReport;
+ReportNum.Print;
+end;
+
+procedure TReports.Button3Click(Sender: TObject);
+begin
+QuerySP.Open;
+ReportSP.ShowReport;
+end;
+
+procedure TReports.Button4Click(Sender: TObject);
+begin
+QuerySP.Open;
+ReportSP.PrepareReport;
+ReportSP.Print;
+end;
+
+procedure TReports.Button5Click(Sender: TObject);
+begin
+QueryMS.Open;
+ReportMS.ShowReport;
+end;
+
+procedure TReports.Button6Click(Sender: TObject);
+begin
+QueryMS.Open;
+ReportMS.PrepareReport;
+ReportMS.Print;
+end;
+
+procedure TReports.Button7Click(Sender: TObject);
+begin
+QueryFilms.Open;
+ReportFilms.ShowReport;
+end;
+
+procedure TReports.Button8Click(Sender: TObject);
+begin
+QueryFilms.Open;
+ReportFilms.PrepareReport;
+ReportFilms.Print;
+end;
+
+procedure TReports.Button9Click(Sender: TObject);
+begin
+QueryMusic.Open;
+ReportMusic.ShowReport;
+end;
+
+procedure TReports.RemNum;
+var
+  TotalDisks:integer;
+begin
+with Query do
+  begin
+  SQL.Clear;
+  SQL.Add('SELECT COUNT([Номер в каталоге]) AS NDisk');
+  SQL.Add('FROM Список_дисков;');
+  Open;
+  TotalDisks:=FieldByName('NDisk').AsInteger;
+  end;
+MenuUnit.Settings.WriteInteger('Print','Last-printed-No',TotalDisks);
+end;
+
+end.

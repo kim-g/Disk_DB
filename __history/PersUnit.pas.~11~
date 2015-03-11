@@ -1,0 +1,78 @@
+unit PersUnit;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.ExtCtrls, Data.DB,
+  Data.Win.ADODB;
+
+type
+  TPersons = class(TForm)
+    Panel1: TPanel;
+    Panel2: TPanel;
+    List: TListBox;
+    ActivePers: TCheckBox;
+    Query: TADOQuery;
+    procedure FormCreate(Sender: TObject);
+    procedure ActivePersClick(Sender: TObject);
+  private
+    procedure UpdateTable;
+  public
+    procedure ShowPersons;
+  end;
+
+var
+  Persons: TPersons;
+  ID_List: TSTringList;
+
+implementation
+
+{$R *.dfm}
+
+uses MenuUnit;
+
+{ TPersons }
+
+procedure TPersons.ActivePersClick(Sender: TObject);
+begin
+Settings.WriteBool('Forms','Persons-Active',ActivePers.Checked);
+UpdateTable;
+end;
+
+procedure TPersons.FormCreate(Sender: TObject);
+begin
+ID_List:=TSTringList.Create;
+end;
+
+procedure TPersons.ShowPersons;
+begin
+ActivePers.Checked:=Settings.ReadBool('Forms','Persons-Active',true);
+
+UpdateTable;
+Show;
+end;
+
+procedure TPersons.UpdateTable;
+begin
+with Query do
+  begin
+  SQL.Clear;
+  SQL.Add('SELECT [Табельный номер], Фамилия, Имя');
+  SQL.Add('FROM [Члены труппы]');
+  if ActivePers.Checked then
+    SQL.Add('WHERE Действующий = TRUE');
+  SQL.Add('ORDER BY [Табельный номер];');
+  Open;
+  List.Items.Clear;
+  ID_List.Clear;
+  while not EOF do
+    begin
+    List.Items.Add(FieldByName('Фамилия').AsString + ' ' + FieldByName('Имя').AsString);
+    ID_List.Add(FieldByName('Табельный номер').AsString);
+    Next;
+    end;
+  end;
+end;
+
+end.

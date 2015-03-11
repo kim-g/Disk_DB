@@ -1,0 +1,49 @@
+unit ReportsUnit;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Data.DB, frxClass, frxDBSet,
+  Data.Win.ADODB, frxDesgn, Vcl.StdCtrls, frxPreview;
+
+type
+  TReports = class(TForm)
+    ReportNum: TfrxReport;
+    FRDataSet: TfrxDBDataset;
+    QueryNum: TADOQuery;
+    Button1: TButton;
+    Button2: TButton;
+    procedure Button1Click(Sender: TObject);
+    procedure Button2Click(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  Reports: TReports;
+
+implementation
+
+{$R *.dfm}
+
+uses MenuUnit;
+
+procedure TReports.Button1Click(Sender: TObject);
+begin
+QueryNum.Open;
+ReportNum.DesignReport;
+ReportNum.ShowReport;         //<frxDBDataset1."Название"> + ' (' + <frxDBDataset1."Комментарий"> + ')'
+
+end;
+
+procedure TReports.Button2Click(Sender: TObject);
+begin
+QueryNum.Open;
+ReportNum.PrepareReport;
+ReportNum.Print;
+end;
+
+end.
