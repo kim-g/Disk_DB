@@ -331,7 +331,6 @@ object SearchForm: TSearchForm
     Font.Style = []
     ParentFont = False
     TabOrder = 2
-    ExplicitTop = 346
     object Button3: TButton
       Left = 11
       Top = 4
@@ -441,5 +440,51 @@ object SearchForm: TSearchForm
     BCDToCurrency = False
     Left = 776
     Top = 200
+  end
+  object frxReport1: TfrxReport
+    Version = '4.12.13'
+    DotMatrixReport = False
+    IniFile = '\Software\Fast Reports'
+    PreviewOptions.Buttons = [pbPrint, pbLoad, pbSave, pbExport, pbZoom, pbFind, pbOutline, pbPageSetup, pbTools, pbEdit, pbNavigator, pbExportQuick]
+    PreviewOptions.Zoom = 1.000000000000000000
+    PrintOptions.Printer = 'Default'
+    PrintOptions.PrintOnSheet = 0
+    ReportOptions.CreateDate = 42089.865913356480000000
+    ReportOptions.LastChange = 42089.866894444440000000
+    ScriptLanguage = 'PascalScript'
+    ScriptText.Strings = (
+      'begin'
+      ''
+      'end.')
+    Left = 232
+    Top = 136
+    Datasets = <>
+    Variables = <>
+    Style = <>
+    object Data: TfrxDataPage
+      Height = 1000.000000000000000000
+      Width = 1000.000000000000000000
+    end
+    object Page1: TfrxReportPage
+      Orientation = poLandscape
+      PaperWidth = 297.000000000000000000
+      PaperHeight = 210.000000000000000000
+      PaperSize = 9
+      LeftMargin = 10.000000000000000000
+      RightMargin = 10.000000000000000000
+      TopMargin = 10.000000000000000000
+      BottomMargin = 10.000000000000000000
+      object MasterData1: TfrxMasterData
+        Height = 22.677180000000000000
+        Top = 102.047310000000000000
+        Width = 1046.929810000000000000
+        RowCount = 0
+      end
+      object ReportTitle1: TfrxReportTitle
+        Height = 22.677180000000000000
+        Top = 18.897650000000000000
+        Width = 1046.929810000000000000
+      end
+    end
   end
 end

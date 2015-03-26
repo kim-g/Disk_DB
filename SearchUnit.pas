@@ -42,6 +42,7 @@ type
     DiskName: TComboBox;
     Report: TfrxReport;
     DS: TfrxDBDataset;
+    frxReport1: TfrxReport;
     procedure FormCreate(Sender: TObject);
     procedure Button1Click(Sender: TObject);
     procedure NDiskEditChange(Sender: TObject);
