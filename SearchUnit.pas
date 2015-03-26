@@ -132,8 +132,8 @@ end;
 
 procedure TSearchForm.Button4Click(Sender: TObject);
 begin
-Report.PrepareReport(true);
-Report.Preview;
+spQuery.Open;
+Report.ShowReport;
 end;
 
 procedure TSearchForm.DBGrid1DblClick(Sender: TObject);
