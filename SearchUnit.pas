@@ -42,7 +42,7 @@ type
     DiskName: TComboBox;
     Report: TfrxReport;
     DS: TfrxDBDataset;
-    frxReport1: TfrxReport;
+    Button4: TButton;
     procedure FormCreate(Sender: TObject);
     procedure Button1Click(Sender: TObject);
     procedure NDiskEditChange(Sender: TObject);
@@ -54,6 +54,7 @@ type
     procedure DBGrid1DblClick(Sender: TObject);
     procedure Button3Click(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure Button4Click(Sender: TObject);
   private
     procedure UpdateTable;
     procedure SavePos;
@@ -127,6 +128,12 @@ procedure TSearchForm.Button3Click(Sender: TObject);
 begin
 Form1.AddDisk;
 UpdateTable;
+end;
+
+procedure TSearchForm.Button4Click(Sender: TObject);
+begin
+Report.PrepareReport(true);
+Report.Preview;
 end;
 
 procedure TSearchForm.DBGrid1DblClick(Sender: TObject);
