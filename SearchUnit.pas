@@ -206,6 +206,8 @@ for i := 0 to 9 do
   DBGrid1.Columns[i].Width:=GridColWith[i];    // Изменение размеров
   end;
 
+Button4.Left:=Panel3.Width-193;
+
 SavePos;
 end;
 
