@@ -248,9 +248,9 @@ SearchForm.Height:=WS.Height;
 SearchForm.Width:=WS.Width;
 WS.ReadOnly:=false;
 Show;
-{if WS.Maximize
+if WS.Maximize
   then ShowWindow(Handle, SW_SHOWMAXIMIZED)
-  else ShowWindow(Handle, SW_SHOW); } //Доделать потом!!!
+  else ShowWindow(Handle, SW_SHOW);
 
 end;
 
