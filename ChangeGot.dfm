@@ -42,8 +42,8 @@ object GetDisk: TGetDisk
     object Label1: TLabel
       Left = 11
       Top = 11
-      Width = 46
-      Height = 19
+      Width = 339
+      Height = 68
       Align = alClient
       Alignment = taCenter
       Caption = 'Label1'
@@ -55,6 +55,8 @@ object GetDisk: TGetDisk
       ParentFont = False
       Layout = tlCenter
       WordWrap = True
+      ExplicitWidth = 46
+      ExplicitHeight = 19
     end
   end
   object Button1: TButton

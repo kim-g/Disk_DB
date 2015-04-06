@@ -70,21 +70,6 @@ if Pers.ItemIndex<>NI then
 
   RUN_SQL.SQL.Assign(SQL);
   RUN_SQL.ExecSQL;
-
-  {SQL.Clear;
-  SQL.Add('INSERT INTO История (Член_труппы, Операция, диск, дата)');
-  s:='VALUES ( ' + TabN[Pers.ItemIndex]+',';
-  //if TabN[Pers.ItemIndex]='-1' then s:=s+' 1,' else '
-
-  SQL.Add(s);
-  if TabN[Pers.ItemIndex]='-1' then
-    SQL.Add('    Дата_Взятия = NULL')
-   else
-    SQL.Add('    Дата_Взятия = DATE()');
-  SQL.Add('WHERE ID_Диска = ' + IntToStr(DiskN) + ';');
-
-  RUN_SQL.SQL.Assign(SQL);
-  RUN_SQL.ExecSQL;   }
   end;
 Close;
 end;
