@@ -1406,6 +1406,7 @@ object Form1: TForm1
     OnClick = Button7Click
   end
   object DB: TADOConnection
+    Connected = True
     ConnectionString = 
       'Provider=Microsoft.Jet.OLEDB.4.0;Password="";Data Source=D:\Drop' +
       'box\'#1058#1077#1072#1090#1088'\DB\ACCESS DB\DVD-'#1073#1080#1073#1083#1080#1086#1090#1077#1082#1072'.mdb;Persist Security Info=' +
