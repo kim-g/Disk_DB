@@ -12,7 +12,8 @@ uses
   PersUnit in 'PersUnit.pas' {Persons},
   PersListUnit in 'PersListUnit.pas' {PersList},
   ReportsUnit in 'ReportsUnit.pas' {Reports},
-  EditPersonsUnit in 'EditPersonsUnit.pas' {EditPersons};
+  EditPersonsUnit in 'EditPersonsUnit.pas' {EditPersons},
+  AddPersonUnit in 'AddPersonUnit.pas' {AddPerson};
 
 {$R *.res}
 
@@ -30,5 +31,6 @@ begin
   Application.CreateForm(TPersList, PersList);
   Application.CreateForm(TReports, Reports);
   Application.CreateForm(TEditPersons, EditPersons);
+  Application.CreateForm(TAddPerson, AddPerson);
   Application.Run;
 end.

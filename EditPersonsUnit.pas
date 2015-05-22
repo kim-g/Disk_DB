@@ -19,6 +19,7 @@ type
 
     procedure ShowEditPersona;
     procedure OnlyUpdate(Sender:TObject);
+    procedure Button1Click(Sender: TObject);
   private
    procedure UpdateTable;
   public
@@ -36,9 +37,14 @@ implementation
 
 {$R *.dfm}
 
-uses MenuUnit;
+uses MenuUnit, AddPersonUnit;
 
 { TEditPersons }
+
+procedure TEditPersons.Button1Click(Sender: TObject);
+begin
+AddPerson.Add;
+end;
 
 procedure TEditPersons.OnlyUpdate(Sender: TObject);
 begin
@@ -72,6 +78,8 @@ for i := 0 to 5 do
   DBGrid1.Columns[i].Width:=GridColWith[i];            // и размеров.
   DBGrid1.Columns[i].ReadOnly:=false;                  // «апрещаем измен€ть значени€.
   end;
+
+
 end;
 
 end.

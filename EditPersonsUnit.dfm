@@ -67,6 +67,7 @@ object EditPersons: TEditPersons
       Height = 33
       Caption = #1044#1086#1073#1072#1074#1080#1090#1100
       TabOrder = 1
+      OnClick = Button1Click
     end
   end
   object TableQuery: TADOQuery
