@@ -1,0 +1,41 @@
+unit EditPersonsUnit;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.ExtCtrls, Data.FMTBcd,
+  Data.SqlExpr, Data.DB, Vcl.Grids, Vcl.DBGrids, Data.Win.ADODB;
+
+type
+  TEditPersons = class(TForm)
+    Panel1: TPanel;
+    Panel2: TPanel;
+    TableQuery: TADOQuery;
+    TableDataSource: TDataSource;
+    DBGrid1: TDBGrid;
+
+    procedure ShowEditPersona;
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  EditPersons: TEditPersons;
+
+implementation
+
+{$R *.dfm}
+
+uses MenuUnit;
+
+{ TEditPersons }
+
+procedure TEditPersons.ShowEditPersona;
+begin
+//
+end;
+
+end.
