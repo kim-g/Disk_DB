@@ -15,8 +15,10 @@ type
     TableDataSource: TDataSource;
     DBGrid1: TDBGrid;
     RadioGroup1: TRadioGroup;
+    Button1: TButton;
 
     procedure ShowEditPersona;
+    procedure OnlyUpdate(Sender:TObject);
   private
    procedure UpdateTable;
   public
@@ -26,6 +28,10 @@ type
 var
   EditPersons: TEditPersons;
 
+const
+  GridColNames: array [0..5] of string = ('№', 'Фамилия', 'Имя', 'Отчество', 'Д.', 'Пол');
+  GridColWith: array [0..5] of word = (80, 150, 150, 150, 60, 40);
+
 implementation
 
 {$R *.dfm}
@@ -34,6 +40,11 @@ uses MenuUnit;
 
 { TEditPersons }
 
+procedure TEditPersons.OnlyUpdate(Sender: TObject);
+begin
+UpdateTable;
+end;
+
 procedure TEditPersons.ShowEditPersona;
 begin
 UpdateTable;
@@ -41,6 +52,8 @@ ShowModal;
 end;
 
 procedure TEditPersons.UpdateTable;
+var
+  i:integer;
 begin
 TableQuery.Active:=false;
 With TableQuery.SQL do
@@ -48,9 +61,17 @@ With TableQuery.SQL do
   Clear;
   Add('SELECT [Табельный номер], Фамилия, Имя, Отчество, Действующий, Пол');
   Add('FROM [Члены труппы]');
+  Add('WHERE ([Табельный номер]>-1) AND ([Табельный номер]<999999)');
   if RadioGroup1.ItemIndex=0 then Add('ORDER BY [Табельный номер];') else Add('ORDER BY Фамилия, Имя;');
   end;
 TableQuery.Active:=true;
+
+for i := 0 to 5 do
+  begin
+  DBGrid1.Columns[i].Title.Caption:=GridColNames[i];   // Изменение заголовков
+  DBGrid1.Columns[i].Width:=GridColWith[i];            // и размеров.
+  DBGrid1.Columns[i].ReadOnly:=false;                  // Запрещаем изменять значения.
+  end;
 end;
 
 end.

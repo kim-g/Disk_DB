@@ -11,6 +11,7 @@ object EditPersons: TEditPersons
   Font.Name = 'Tahoma'
   Font.Style = []
   OldCreateOrder = False
+  Position = poMainFormCenter
   PixelsPerInch = 96
   TextHeight = 19
   object Panel1: TPanel
@@ -57,6 +58,15 @@ object EditPersons: TEditPersons
         #1087#1086' '#1085#1086#1084#1077#1088#1091
         #1087#1086' '#1089#1087#1080#1089#1082#1091)
       TabOrder = 0
+      OnClick = OnlyUpdate
+    end
+    object Button1: TButton
+      Left = 24
+      Top = 24
+      Width = 177
+      Height = 33
+      Caption = #1044#1086#1073#1072#1074#1080#1090#1100
+      TabOrder = 1
     end
   end
   object TableQuery: TADOQuery
