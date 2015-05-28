@@ -3,7 +3,7 @@ object EditPersons: TEditPersons
   Top = 0
   BorderStyle = bsDialog
   Caption = #1056#1077#1076#1072#1082#1090#1080#1088#1086#1074#1072#1090#1100' '#1089#1087#1080#1089#1086#1082' '#1095#1083#1077#1085#1086#1074' '#1090#1088#1091#1087#1087#1099
-  ClientHeight = 762
+  ClientHeight = 767
   ClientWidth = 759
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -19,18 +19,17 @@ object EditPersons: TEditPersons
     Left = 0
     Top = 0
     Width = 759
-    Height = 674
+    Height = 679
     Align = alClient
     BevelInner = bvLowered
     BorderWidth = 10
     TabOrder = 0
-    ExplicitWidth = 749
-    ExplicitHeight = 664
+    ExplicitHeight = 674
     object DBGrid1: TDBGrid
       Left = 12
       Top = 12
       Width = 735
-      Height = 650
+      Height = 655
       Align = alClient
       DataSource = TableDataSource
       TabOrder = 0
@@ -43,13 +42,12 @@ object EditPersons: TEditPersons
   end
   object Panel2: TPanel
     Left = 0
-    Top = 674
+    Top = 679
     Width = 759
     Height = 88
     Align = alBottom
     TabOrder = 1
-    ExplicitTop = 664
-    ExplicitWidth = 749
+    ExplicitTop = 674
     object RadioGroup1: TRadioGroup
       Left = 560
       Top = 6

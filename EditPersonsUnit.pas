@@ -139,7 +139,7 @@ for i := 0 to 5 do
   begin
   DBGrid1.Columns[i].Title.Caption:=GridColNames[i];   // Изменение заголовков
   DBGrid1.Columns[i].Width:=GridColWith[i];            // и размеров.
-  DBGrid1.Columns[i].ReadOnly:=false;                  // Запрещаем изменять значения.
+  DBGrid1.Columns[i].ReadOnly:=i=0;                    // разрешаем изменять значения для всех кроме 0-го.
   end;
 
 
