@@ -5,7 +5,7 @@ object Form1: TForm1
   BorderStyle = bsSingle
   Caption = 'DVD-'#1073#1080#1073#1083#1080#1086#1090#1077#1082#1072
   ClientHeight = 555
-  ClientWidth = 382
+  ClientWidth = 378
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText

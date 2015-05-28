@@ -16,10 +16,13 @@ type
     DBGrid1: TDBGrid;
     RadioGroup1: TRadioGroup;
     Button1: TButton;
+    Button2: TButton;
+    Query: TADOQuery;
 
     procedure ShowEditPersona;
     procedure OnlyUpdate(Sender:TObject);
     procedure Button1Click(Sender: TObject);
+    procedure Button2Click(Sender: TObject);
   private
    procedure UpdateTable;
   public
@@ -44,6 +47,66 @@ uses MenuUnit, AddPersonUnit;
 procedure TEditPersons.Button1Click(Sender: TObject);
 begin
 AddPerson.Add;
+end;
+
+procedure TEditPersons.Button2Click(Sender: TObject);
+var
+  GotDisks:Integer;
+  S:String;
+
+const
+  DisksGot:array[0..9]of string = ('дисков','диск','диска','диска','диска','дисков','дисков','дисков','дисков','дисков');
+begin
+Query.Active:=false;
+with Query.SQL do
+  begin
+  Clear;
+  Add('SELECT Count(*) As GotDisks');
+  Add('FROM Список_дисков');
+  Add('WHERE Взят = ' + IntToStr(DBGrid1.DataSource.DataSet.FieldValues['Табельный номер']));
+  end;
+
+Query.Active:=true;
+
+GotDisks := Query.FieldByName('GotDisks').AsInteger;
+
+if GotDisks=0 then
+  begin
+  if MessageDlg('У данного члена труппы не взят ни один диск. Удаление записи возможно. Удалить?',
+   mtConfirmation, [mbYes, mbNo], 0) = mrYes then
+    begin
+    Query.Active:=false;
+    with Query.SQL do
+      begin
+      clear;
+      Add('DELETE *');
+      Add('FROM [Члены труппы]');
+      Add('WHERE [Табельный номер] = ' + IntToStr(DBGrid1.DataSource.DataSet.FieldValues['Табельный номер']) + ';');
+      end;
+    Query.ExecSQL;
+    ShowMessage('Запись удалена.');
+    TableQuery.Requery;
+    end;
+
+  end
+ else
+  begin
+  S := 'У указанного члена труппы взят';
+  if GotDisks = 1
+    then S:=S + ' '
+    else if GotDisks < 20
+      then S:=S + 'о '
+      else if (GotDisks mod 10) = 1
+        then S:=S + ' '
+        else S:=S + 'о ';
+  S := S + IntToStr(GotDisks);
+  if GotDisks in [11..19]
+    then S:=S + ' дисков'
+    else S:=S + ' ' + DisksGot[GotDisks mod 10];
+
+  S := S + '. Необходимо разобраться со взятыми дисками и только после этого удалить профиль.';
+  ShowMessage(S);
+  end;
 end;
 
 procedure TEditPersons.OnlyUpdate(Sender: TObject);
