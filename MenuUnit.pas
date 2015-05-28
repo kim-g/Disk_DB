@@ -39,6 +39,7 @@ type
     Bevel2: TBevel;
     Button7: TButton;
     Query: TADOQuery;
+    Button8: TButton;
     procedure Button7Click(Sender: TObject);
     procedure Button1Click(Sender: TObject);
     procedure Button6Click(Sender: TObject);
@@ -46,6 +47,7 @@ type
     procedure FormCreate(Sender: TObject);
     procedure Button2Click(Sender: TObject);
     procedure Button5Click(Sender: TObject);
+    procedure Button8Click(Sender: TObject);
   private
     function AppData:string;
     procedure Backup;
@@ -76,7 +78,8 @@ implementation
 
 {$R *.dfm}
 
-uses SearchUnit, AdminUnit, AddTitle, AddVideo, AddDisk, PersUnit, ReportsUnit;
+uses SearchUnit, AdminUnit, AddTitle, AddVideo, AddDisk, PersUnit, ReportsUnit,
+  EditPersonsUnit;
 
 procedure TForm1.AddDisk;
 var
@@ -159,6 +162,11 @@ end;
 procedure TForm1.Button7Click(Sender: TObject);
 begin
 Application.Terminate;
+end;
+
+procedure TForm1.Button8Click(Sender: TObject);
+begin
+EditPersons.ShowEditPersona;
 end;
 
 procedure TForm1.FormCreate(Sender: TObject);

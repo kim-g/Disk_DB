@@ -4,8 +4,8 @@ object Form1: TForm1
   BorderIcons = [biSystemMenu, biMinimize]
   BorderStyle = bsSingle
   Caption = 'DVD-'#1073#1080#1073#1083#1080#1086#1090#1077#1082#1072
-  ClientHeight = 505
-  ClientWidth = 382
+  ClientHeight = 555
+  ClientWidth = 378
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -1338,7 +1338,7 @@ object Form1: TForm1
   end
   object Bevel2: TBevel
     Left = 16
-    Top = 439
+    Top = 487
     Width = 345
     Height = 17
     Shape = bsTopLine
@@ -1380,7 +1380,7 @@ object Form1: TForm1
   end
   object Button5: TButton
     Left = 16
-    Top = 345
+    Top = 344
     Width = 345
     Height = 41
     Caption = #1053#1072#1087#1077#1095#1072#1090#1072#1090#1100' '#1086#1090#1095#1105#1090#1099
@@ -1389,7 +1389,7 @@ object Form1: TForm1
   end
   object Button6: TButton
     Left = 16
-    Top = 392
+    Top = 440
     Width = 345
     Height = 41
     Caption = #1040#1076#1084#1080#1085#1082#1072
@@ -1398,14 +1398,24 @@ object Form1: TForm1
   end
   object Button7: TButton
     Left = 16
-    Top = 448
+    Top = 496
     Width = 345
     Height = 41
     Caption = #1042#1099#1081#1090#1080
     TabOrder = 6
     OnClick = Button7Click
   end
+  object Button8: TButton
+    Left = 16
+    Top = 391
+    Width = 345
+    Height = 41
+    Caption = #1056#1077#1076#1072#1082#1090#1080#1088#1086#1074#1072#1090#1100' '#1089#1087#1080#1089#1086#1082' '#1090#1088#1091#1087#1087#1099
+    TabOrder = 7
+    OnClick = Button8Click
+  end
   object DB: TADOConnection
+    Connected = True
     ConnectionString = 
       'Provider=Microsoft.Jet.OLEDB.4.0;Password="";Data Source=D:\Drop' +
       'box\'#1058#1077#1072#1090#1088'\DB\ACCESS DB\DVD-'#1073#1080#1073#1083#1080#1086#1090#1077#1082#1072'.mdb;Persist Security Info=' +
