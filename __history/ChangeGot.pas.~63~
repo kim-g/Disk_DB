@@ -22,6 +22,7 @@ type
     procedure FormCreate(Sender: TObject);
     procedure Button2Click(Sender: TObject);
     procedure Button1Click(Sender: TObject);
+    procedure FormShow(Sender: TObject);
   private
     { Private declarations }
   public
@@ -54,13 +55,21 @@ uses MenuUnit;
 { TForm2 }
 
 procedure TGetDisk.Button1Click(Sender: TObject);
+var s:string;
 begin
 if Pers.ItemIndex<>NI then
   begin
   SQL.Clear;
-  SQL.Add('UPDATE TOP 1 Список_дисков');
-  SQL.Add('SET Взят = ' + TabN[Pers.ItemIndex]);
-  SQL.Add('WHERE ID_Диска = ' + DiskN + ';');
+  SQL.Add('UPDATE Список_дисков');
+  SQL.Add('SET Взят = ' + TabN[Pers.ItemIndex]+',');
+  if TabN[Pers.ItemIndex]='-1' then
+    SQL.Add('    Дата_Взятия = NULL')
+   else
+    SQL.Add('    Дата_Взятия = DATE()');
+  SQL.Add('WHERE ID_Диска = ' + IntToStr(DiskN) + ';');
+
+  RUN_SQL.SQL.Assign(SQL);
+  RUN_SQL.ExecSQL;
   end;
 Close;
 end;
@@ -74,6 +83,11 @@ procedure TGetDisk.FormCreate(Sender: TObject);
 begin
 SQL:=TStringList.Create;
 TabN:=TStringList.Create;
+end;
+
+procedure TGetDisk.FormShow(Sender: TObject);
+begin
+Pers.SetFocus;
 end;
 
 procedure TGetDisk.GetDisk(NDisk: Cardinal);
@@ -102,6 +116,7 @@ Label1.Caption:=SelDisk.FieldByName('Диск').AsString;
 if SelDisk.FieldByName('Номер_Спектакля').AsString<>'' then
   Label1.Caption:=Label1.Caption + ' (' + SelDisk.FieldByName('Номер_Спектакля').AsString + ')';
 
+Pers.Items.Clear;
 TabN.Clear;
 
 i:=0;
@@ -122,6 +137,8 @@ with PersList do
     end;
 
 Pers.ItemIndex:=NI;
+
+//Pers.SetFocus;
 
 showmodal;
 end;
