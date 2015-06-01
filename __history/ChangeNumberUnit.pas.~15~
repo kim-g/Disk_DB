@@ -16,9 +16,11 @@ type
     Button1: TButton;
     Button2: TButton;
     Query: TADOQuery;
+    InBase: TADOQuery;
     procedure Edit1Change(Sender: TObject);
     procedure ChangeNum(ID: Integer);
     procedure Button2Click(Sender: TObject);
+    procedure Button1Click(Sender: TObject);
   private
     { Private declarations }
   public
@@ -33,7 +35,54 @@ implementation
 
 {$R *.dfm}
 
-uses MenuUnit;
+uses MenuUnit, EditPersonsUnit;
+
+procedure TChangeNumber.Button1Click(Sender: TObject);
+begin
+Query.Active:=false;
+InBase.Active:=false;
+with InBase.SQL do
+  begin
+  Clear;
+  Add('SELECT *');
+  Add('FROM [Члены труппы]');
+  Add('WHERE [Табельный номер] = ' + IntToStr(NumberToChange));
+  end;
+
+InBase.Active:=true;
+
+with Query.SQL do
+  begin
+  Clear;
+  Add('INSERT INTO [Члены труппы] ([Табельный номер], Фамилия, Имя, Отчество, Действующий, Пол)');
+  Add('VALUES (' + Edit1.Text + ', "' + InBase.FieldByName('Фамилия').AsString + '", "' + InBase.FieldByName('Имя').AsString +
+    '", "' + InBase.FieldByName('Отчество').AsString + '", ' + InBase.FieldByName('Действующий').AsString + ', ' +
+    InBase.FieldByName('Пол').AsString+');');
+  end;
+//  ShowMessage(Query.SQL.Text);
+Query.ExecSQL;
+
+with Query.SQL do
+  begin
+  Clear;
+  Add('UPDATE Список_дисков');
+  Add('SET Взят = ' + Edit1.Text);
+  Add('WHERE Взят = ' + IntToStr(NumberToChange));
+  end;
+Query.ExecSQL;
+
+with Query.SQL do
+  begin
+  Clear;
+  Add('DELETE *');
+  Add('FROM [Члены труппы]');
+  Add('WHERE [Табельный номер] = ' + IntToStr(NumberToChange));
+  end;
+Query.ExecSQL;
+
+EditPersons.TableQuery.Requery;
+Close;
+end;
 
 procedure TChangeNumber.Button2Click(Sender: TObject);
 begin

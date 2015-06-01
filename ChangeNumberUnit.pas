@@ -74,6 +74,15 @@ Query.ExecSQL;
 with Query.SQL do
   begin
   Clear;
+  Add('UPDATE История');
+  Add('SET Член_Труппы = ' + Edit1.Text);
+  Add('WHERE Член_Труппы = ' + IntToStr(NumberToChange));
+  end;
+Query.ExecSQL;
+
+with Query.SQL do
+  begin
+  Clear;
   Add('DELETE *');
   Add('FROM [Члены труппы]');
   Add('WHERE [Табельный номер] = ' + IntToStr(NumberToChange));
