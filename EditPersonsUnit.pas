@@ -18,11 +18,13 @@ type
     Button1: TButton;
     Button2: TButton;
     Query: TADOQuery;
+    Button3: TButton;
 
     procedure ShowEditPersona;
     procedure OnlyUpdate(Sender:TObject);
     procedure Button1Click(Sender: TObject);
     procedure Button2Click(Sender: TObject);
+    procedure Button3Click(Sender: TObject);
   private
    procedure UpdateTable;
   public
@@ -40,7 +42,7 @@ implementation
 
 {$R *.dfm}
 
-uses MenuUnit, AddPersonUnit;
+uses MenuUnit, AddPersonUnit, ChangeNumberUnit;
 
 { TEditPersons }
 
@@ -107,6 +109,11 @@ if GotDisks=0 then
   S := S + '. Необходимо разобраться со взятыми дисками и только после этого удалить профиль.';
   ShowMessage(S);
   end;
+end;
+
+procedure TEditPersons.Button3Click(Sender: TObject);
+begin
+ChangeNumber.ChangeNum(DBGrid1.DataSource.DataSet.FieldValues['Табельный номер']);
 end;
 
 procedure TEditPersons.OnlyUpdate(Sender: TObject);

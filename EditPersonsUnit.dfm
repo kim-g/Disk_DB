@@ -24,7 +24,6 @@ object EditPersons: TEditPersons
     BevelInner = bvLowered
     BorderWidth = 10
     TabOrder = 0
-    ExplicitHeight = 674
     object DBGrid1: TDBGrid
       Left = 12
       Top = 12
@@ -47,7 +46,6 @@ object EditPersons: TEditPersons
     Height = 88
     Align = alBottom
     TabOrder = 1
-    ExplicitTop = 674
     object RadioGroup1: TRadioGroup
       Left = 560
       Top = 6
@@ -64,20 +62,29 @@ object EditPersons: TEditPersons
     object Button1: TButton
       Left = 24
       Top = 24
-      Width = 177
+      Width = 145
       Height = 33
       Caption = #1044#1086#1073#1072#1074#1080#1090#1100
       TabOrder = 1
       OnClick = Button1Click
     end
     object Button2: TButton
-      Left = 216
+      Left = 400
       Top = 24
-      Width = 169
+      Width = 145
       Height = 33
       Caption = #1059#1076#1072#1083#1080#1090#1100
       TabOrder = 2
       OnClick = Button2Click
+    end
+    object Button3: TButton
+      Left = 216
+      Top = 24
+      Width = 137
+      Height = 33
+      Caption = #1048#1079#1084#1077#1085#1080#1090#1100' '#1085#1086#1084#1077#1088
+      TabOrder = 3
+      OnClick = Button3Click
     end
   end
   object TableQuery: TADOQuery
