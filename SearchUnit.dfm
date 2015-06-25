@@ -501,7 +501,7 @@ object SearchForm: TSearchForm
         end
         object Memo13: TfrxMemoView
           Left = 162.519790000000000000
-          Width = 268.346630000000000000
+          Width = 374.173470000000000000
           Height = 18.897650000000000000
           ShowHint = False
           Font.Charset = DEFAULT_CHARSET
@@ -516,7 +516,7 @@ object SearchForm: TSearchForm
           ParentFont = False
         end
         object Memo14: TfrxMemoView
-          Left = 430.866420000000000000
+          Left = 536.693260000000000000
           Width = 49.133890000000000000
           Height = 18.897650000000000000
           ShowHint = False
@@ -532,7 +532,7 @@ object SearchForm: TSearchForm
           ParentFont = False
         end
         object Memo15: TfrxMemoView
-          Left = 480.000310000000000000
+          Left = 585.827150000000000000
           Width = 90.708720000000000000
           Height = 18.897650000000000000
           ShowHint = False
@@ -545,22 +545,6 @@ object SearchForm: TSearchForm
           HAlign = haCenter
           Memo.UTF8W = (
             #1044#1072#1090#1072)
-          ParentFont = False
-        end
-        object Memo16: TfrxMemoView
-          Left = 570.709030000000000000
-          Width = 105.826840000000000000
-          Height = 18.897650000000000000
-          ShowHint = False
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clBlack
-          Font.Height = -13
-          Font.Name = 'Arial'
-          Font.Style = []
-          Frame.Typ = [ftBottom]
-          HAlign = haCenter
-          Memo.UTF8W = (
-            #1052#1077#1089#1090#1086' '#1085#1072' '#1087#1086#1083#1082#1077)
           ParentFont = False
         end
         object Memo17: TfrxMemoView
@@ -643,7 +627,7 @@ object SearchForm: TSearchForm
         end
         object Memo3: TfrxMemoView
           Left = 162.519790000000000000
-          Width = 264.567100000000000000
+          Width = 366.614410000000000000
           Height = 18.897650000000000000
           ShowHint = False
           StretchMode = smActualHeight
@@ -654,7 +638,7 @@ object SearchForm: TSearchForm
             '[frxDBDataset1."'#1053#1072#1079#1074#1072#1085#1080#1077'"]')
         end
         object Memo4: TfrxMemoView
-          Left = 430.866420000000000000
+          Left = 536.693260000000000000
           Width = 41.574830000000000000
           Height = 18.897650000000000000
           ShowHint = False
@@ -665,7 +649,7 @@ object SearchForm: TSearchForm
             '[frxDBDataset1."'#1053#1086#1084#1077#1088'_'#1057#1087#1077#1082#1090#1072#1082#1083#1103'"]')
         end
         object Memo5: TfrxMemoView
-          Left = 480.000310000000000000
+          Left = 585.827150000000000000
           Width = 83.149660000000000000
           Height = 18.897650000000000000
           ShowHint = False
@@ -674,17 +658,6 @@ object SearchForm: TSearchForm
           DataSetName = 'frxDBDataset1'
           Memo.UTF8W = (
             '[frxDBDataset1."'#1044#1072#1090#1072'_'#1057#1087#1077#1082#1090#1072#1082#1083#1103'"]')
-        end
-        object Memo6: TfrxMemoView
-          Left = 570.709030000000000000
-          Width = 105.826840000000000000
-          Height = 18.897650000000000000
-          ShowHint = False
-          DataField = #1052#1077#1089#1090#1086' '#1085#1072' '#1087#1086#1083#1082#1077
-          DataSet = DS
-          DataSetName = 'frxDBDataset1'
-          Memo.UTF8W = (
-            '[frxDBDataset1."'#1052#1077#1089#1090#1086' '#1085#1072' '#1087#1086#1083#1082#1077'"]')
         end
         object Memo7: TfrxMemoView
           Left = 680.315400000000000000

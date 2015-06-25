@@ -345,7 +345,7 @@ object Reports: TReports
         end
         object Memo5: TfrxMemoView
           Left = 154.960730000000000000
-          Width = 279.685220000000000000
+          Width = 396.850650000000000000
           Height = 18.897650000000000000
           ShowHint = False
           StretchMode = smMaxHeight
@@ -358,8 +358,8 @@ object Reports: TReports
               ' '#39')'#39',<frxDBDataset1."'#1053#1072#1079#1074#1072#1085#1080#1077'">)]')
         end
         object Memo6: TfrxMemoView
-          Left = 438.425480000000000000
-          Width = 34.015770000000000000
+          Left = 555.590910000000000000
+          Width = 34.015770000000010000
           Height = 18.897650000000000000
           ShowHint = False
           DataField = #1053#1086#1084#1077#1088'_'#1057#1087#1077#1082#1090#1072#1082#1083#1103
@@ -369,7 +369,7 @@ object Reports: TReports
             '[frxDBDataset1."'#1053#1086#1084#1077#1088'_'#1057#1087#1077#1082#1090#1072#1082#1083#1103'"]')
         end
         object Memo7: TfrxMemoView
-          Left = 476.220780000000000000
+          Left = 593.386210000000000000
           Width = 79.370130000000000000
           Height = 18.897650000000000000
           ShowHint = False
@@ -378,18 +378,6 @@ object Reports: TReports
           DataSetName = 'frxDBDataset1'
           Memo.UTF8W = (
             '[frxDBDataset1."'#1044#1072#1090#1072'_'#1057#1087#1077#1082#1090#1072#1082#1083#1103'"]')
-        end
-        object Memo8: TfrxMemoView
-          Left = 559.370440000000000000
-          Width = 113.385900000000000000
-          Height = 18.897650000000000000
-          ShowHint = False
-          StretchMode = smMaxHeight
-          DataField = #1052#1077#1089#1090#1086' '#1085#1072' '#1087#1086#1083#1082#1077
-          DataSet = FRDataSet
-          DataSetName = 'frxDBDataset1'
-          Memo.UTF8W = (
-            '[frxDBDataset1."'#1052#1077#1089#1090#1086' '#1085#1072' '#1087#1086#1083#1082#1077'"]')
         end
       end
       object PageFooter1: TfrxPageFooter
@@ -442,7 +430,7 @@ object Reports: TReports
         end
         object Memo11: TfrxMemoView
           Left = 154.960730000000000000
-          Width = 283.464750000000000000
+          Width = 400.630180000000000000
           Height = 18.897650000000000000
           ShowHint = False
           Font.Charset = DEFAULT_CHARSET
@@ -456,7 +444,7 @@ object Reports: TReports
           ParentFont = False
         end
         object Memo12: TfrxMemoView
-          Left = 438.425480000000000000
+          Left = 555.590910000000000000
           Width = 37.795300000000000000
           Height = 18.897650000000000000
           ShowHint = False
@@ -471,7 +459,7 @@ object Reports: TReports
           ParentFont = False
         end
         object Memo13: TfrxMemoView
-          Left = 476.220780000000000000
+          Left = 593.386210000000000000
           Width = 83.149660000000000000
           Height = 18.897650000000000000
           ShowHint = False
@@ -483,21 +471,6 @@ object Reports: TReports
           Frame.Typ = [ftBottom]
           Memo.UTF8W = (
             #1044#1072#1090#1072)
-          ParentFont = False
-        end
-        object Memo14: TfrxMemoView
-          Left = 559.370440000000000000
-          Width = 120.944960000000000000
-          Height = 18.897650000000000000
-          ShowHint = False
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clBlack
-          Font.Height = -13
-          Font.Name = 'Arial'
-          Font.Style = [fsBold]
-          Frame.Typ = [ftBottom]
-          Memo.UTF8W = (
-            #1052#1077#1089#1090#1086' '#1085#1072' '#1087#1086#1083#1082#1077)
           ParentFont = False
         end
       end
