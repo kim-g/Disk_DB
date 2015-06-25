@@ -31,6 +31,7 @@ type
     procedure KatChange(Sender: TObject);
     procedure Button3Click(Sender: TObject);
     procedure Button1Click(Sender: TObject);
+    procedure Button2Click(Sender: TObject);
   private
     procedure UpdateTable;
     procedure Prepare;
@@ -68,7 +69,13 @@ procedure TAddVideoForm.Button1Click(Sender: TObject);
 var
   SysDate:TSystemTime;
   n:integer;
+  s:string;
 begin
+if Kat.ItemIndex=0 then
+  begin
+  ShowMessage('Выберите категорию!');
+  exit;
+  end;
 with Query do
   begin
   SQL.Clear;
@@ -76,19 +83,51 @@ with Query do
   SQL.Add('FROM Видеозаписи ');
   SQL.Add('WHERE (Видеозаписи.Сюжет = ' + IntToStr(NewDisk.Title) + ')');
   SQL.Add(' AND (Видеозаписи.Категория = ' + ID_Kat[Kat.ItemIndex] + ')');
-  SQL.Add(' AND (Видеозаписи.Номер_Спектакля = ' + Num.Text + ')');
+  if Num.Text<> '' then SQL.Add(' AND (Видеозаписи.Номер_Спектакля = ' + Num.Text + ')');
   DateTimeToSystemTime(DT.Date,SysDate);
   if DCheck.Checked then
     SQL.Add(' AND (Видеозаписи.Дата_Спектакля = #' + IntToStr(SysDate.wMonth) + '/' +
-    IntToStr(SysDate.wDay) + '/' + IntToStr(SysDate.wYear) + '#)');
+      IntToStr(SysDate.wDay) + '/' + IntToStr(SysDate.wYear) + '#)');
   SQL.Add(' AND (Видеозаписи.Место_на_полке = ' + ID_Place[Place.ItemIndex] + ');');
   SQL_History.AddList(SQL);
   Open;
   n:=FieldByName('Число').AsInteger;
   Close;
-  if n=0 then showMessage('OK');
+  if n=0 then
+    begin
+    SQL.Clear;
+    SQL.Add('INSERT INTO Видеозаписи');
+    s:='(Сюжет, Категория, Номер_Спектакля, ';
+    if DCheck.Checked then s:=s+'Дата_Спектакля, ';
+    s:=s+'Место_на_полке)';
+    SQL.Add(s);
+    s:='VALUES (' + IntToStr(NewDisk.Title) + ', ' + ID_Kat[Kat.ItemIndex] + ', ';
+    if Num.Text='' then s:=s+'NULL, ' else s:=s+Num.Text + ', ';
 
+    if DCheck.Checked then s := s + '#' + IntToStr(SysDate.wMonth) + '/' +
+        IntToStr(SysDate.wDay) + '/' + IntToStr(SysDate.wYear) + '#, ';
+    s:= s + ID_Place[Place.ItemIndex] + ');';
+    SQL.Add(s);
+    SQL_History.AddList(SQL);
+
+    ExecSQL;
+    UpdateTable;
+    end;
   end;
+end;
+
+procedure TAddVideoForm.Button2Click(Sender: TObject);
+begin
+if List.ItemIndex=-1 then
+  begin
+  ShowMessage('Выберите видеозапись!');
+  exit;
+  end;
+
+NewDisk.Video:=StrToInt(ID[List.ItemIndex]);
+NewDisk.Video_Text:=List.Items[List.ItemIndex];
+Cont:=true;
+close;
 end;
 
 procedure TAddVideoForm.Button3Click(Sender: TObject);
@@ -160,6 +199,11 @@ with Query do
 
 Place.ItemIndex:=0;
 
+Num.Text:='';
+DCheck.Checked:=false;
+DT.Date:=Date;
+
+
 end;
 
 procedure TAddVideoForm.UpdateTable;
@@ -173,7 +217,7 @@ with Query do
   begin
   SQL.Clear;
   SQL.Add('SELECT Видеозаписи.ID_Видеозаписи, Категории.Категория, Сюжеты.Название, Видеозаписи.Номер_Спектакля,');
-  SQL.Add(' Видеозаписи.Дата_Спектакля, МестоНаПолке.[Место на полке]');
+  SQL.Add(' Видеозаписи.Дата_Спектакля, МестоНаПолке.[Место на полке], Видеозаписи.Комментарий');
   SQL.Add('FROM МестоНаПолке ');
   SQL.Add('INNER JOIN (Категории');
   SQL.Add('  INNER JOIN (Сюжеты');
@@ -195,7 +239,9 @@ with Query do
           s:=s + '(' + FieldByName('Номер_Спектакля').AsString + ') ';
         if FieldByName('Дата_Спектакля').AsString<>'' then
           s:=s + DateToStr(FieldByName('Дата_Спектакля').AsDateTime) + ' ';
-        s:=s + FieldByName('Место на полке').AsString + ' ';
+        s:=s + FieldByName('Место на полке').AsString;
+        if FieldByName('Комментарий').AsString<>'' then
+          s := s + ' (' + FieldByName('Комментарий').AsString+')' ;
         List.Items.Add(s);
         ID.Add(FieldByName('ID_Видеозаписи').AsString);
         next;

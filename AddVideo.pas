@@ -239,7 +239,7 @@ with Query do
           s:=s + '(' + FieldByName('Номер_Спектакля').AsString + ') ';
         if FieldByName('Дата_Спектакля').AsString<>'' then
           s:=s + DateToStr(FieldByName('Дата_Спектакля').AsDateTime) + ' ';
-        s:=s + FieldByName('Место на полке').AsString;
+        //s:=s + FieldByName('Место на полке').AsString;      //Место на полке. Если вернём, то раскомментировать.
         if FieldByName('Комментарий').AsString<>'' then
           s := s + ' (' + FieldByName('Комментарий').AsString+')' ;
         List.Items.Add(s);

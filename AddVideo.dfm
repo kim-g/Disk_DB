@@ -43,6 +43,8 @@ object AddVideoForm: TAddVideoForm
     Width = 120
     Height = 19
     Caption = #1052#1077#1089#1090#1086' '#1085#1072' '#1087#1086#1083#1082#1077':'
+    Enabled = False
+    Visible = False
   end
   object Bevel1: TBevel
     Left = 8
@@ -110,7 +112,9 @@ object AddVideoForm: TAddVideoForm
     Width = 172
     Height = 27
     Style = csDropDownList
+    Enabled = False
     TabOrder = 5
+    Visible = False
     OnChange = KatChange
   end
   object Button3: TButton
