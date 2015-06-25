@@ -66,13 +66,13 @@ type
 var
   SearchForm: TSearchForm;
   SQL_Query:TStringList;
-  GridColWith: array [0..9] of word = (0, 40, 140, 210, 40, 90, 140, 70, 130, 70);    // -30-20-30
+  GridColWith: array [0..9] of word = (0, 40, 140, 340, 40, 90, 0, 70, 130, 80);    // -30-20-30
   Cat:array [1..10] of TCheckBox;
   WS:TWindowPosition;
 
 
 const
-  AllOther = 767;
+  AllOther = 637;
   Common_SQL_Query:array[1..18] of String =
     ('SELECT Список_Дисков.ID_Диска, Список_Дисков.[Номер в каталоге], Категории.Категория, Сюжеты.Название,',
      '       Видеозаписи.Номер_Спектакля, Видеозаписи.Дата_Спектакля, МестоНаПолке.[Место на полке],',
