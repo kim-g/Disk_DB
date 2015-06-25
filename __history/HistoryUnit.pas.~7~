@@ -1,0 +1,58 @@
+unit HistoryUnit;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.Grids, Vcl.DBGrids, Data.DB,
+  Data.Win.ADODB, Vcl.ExtCtrls;
+
+type
+  THistory = class(TForm)
+    Panel1: TPanel;
+    Panel2: TPanel;
+    Query: TADOQuery;
+    DBGrid1: TDBGrid;
+    DataSource: TDataSource;
+    procedure ShowHistory;
+    procedure Scale;
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  History: THistory;
+
+implementation
+
+{$R *.dfm}
+
+uses MenuUnit;
+
+{ THistory }
+
+procedure THistory.Scale;
+var
+  I: Integer;
+const
+  GridColNames: array [0..3] of string = ('Член труппы','Операция','Диск','Дата');
+  GridColWith: array [0..3] of integer = (100,70,50,100);
+begin
+for I := 0 to 3 do
+  begin
+  DBGrid1.Columns[i].Title.Caption:=GridColNames[i];   // Изменение заголовков
+  DBGrid1.Columns[i].Width:=GridColWith[i];            // и размеров.
+  DBGrid1.Columns[i].ReadOnly:=true;                   // запрещаем изменять значения для всех.
+  end;
+end;
+
+procedure THistory.ShowHistory;
+begin
+Query.Active:=true;
+Scale;
+ShowModal;
+end;
+
+end.

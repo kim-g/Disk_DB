@@ -48,6 +48,7 @@ type
     procedure Button2Click(Sender: TObject);
     procedure Button5Click(Sender: TObject);
     procedure Button8Click(Sender: TObject);
+    procedure Button3Click(Sender: TObject);
   private
     function AppData:string;
     procedure Backup;
@@ -79,7 +80,7 @@ implementation
 {$R *.dfm}
 
 uses SearchUnit, AdminUnit, AddTitle, AddVideo, AddDisk, PersUnit, ReportsUnit,
-  EditPersonsUnit;
+  EditPersonsUnit, HistoryUnit;
 
 procedure TForm1.AddDisk;
 var
@@ -142,6 +143,11 @@ end;
 procedure TForm1.Button2Click(Sender: TObject);
 begin
 Persons.ShowPersons;
+end;
+
+procedure TForm1.Button3Click(Sender: TObject);
+begin
+History.ShowHistory;
 end;
 
 procedure TForm1.Button4Click(Sender: TObject);

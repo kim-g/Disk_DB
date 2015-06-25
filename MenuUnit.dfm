@@ -677,8 +677,9 @@ object Form1: TForm1
     Top = 239
     Width = 345
     Height = 41
-    Caption = '# '#1048#1089#1090#1086#1088#1080#1103
+    Caption = #1048#1089#1090#1086#1088#1080#1103
     TabOrder = 2
+    OnClick = Button3Click
   end
   object Button4: TButton
     Left = 16
@@ -726,6 +727,7 @@ object Form1: TForm1
     OnClick = Button8Click
   end
   object DB: TADOConnection
+    Connected = True
     ConnectionString = 
       'Provider=Microsoft.Jet.OLEDB.4.0;Password="";Data Source=D:\Drop' +
       'box\'#1058#1077#1072#1090#1088'\DB\ACCESS DB\DVD-'#1073#1080#1073#1083#1080#1086#1090#1077#1082#1072'.mdb;Persist Security Info=' +

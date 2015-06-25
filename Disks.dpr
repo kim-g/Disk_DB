@@ -14,7 +14,8 @@ uses
   ReportsUnit in 'ReportsUnit.pas' {Reports},
   EditPersonsUnit in 'EditPersonsUnit.pas' {EditPersons},
   AddPersonUnit in 'AddPersonUnit.pas' {AddPerson},
-  ChangeNumberUnit in 'ChangeNumberUnit.pas' {ChangeNumber};
+  ChangeNumberUnit in 'ChangeNumberUnit.pas' {ChangeNumber},
+  HistoryUnit in 'HistoryUnit.pas' {History};
 
 {$R *.res}
 
@@ -34,5 +35,6 @@ begin
   Application.CreateForm(TEditPersons, EditPersons);
   Application.CreateForm(TAddPerson, AddPerson);
   Application.CreateForm(TChangeNumber, ChangeNumber);
+  Application.CreateForm(THistory, History);
   Application.Run;
 end.

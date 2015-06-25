@@ -1,0 +1,251 @@
+unit MenuUnit;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Data.DB, Data.Win.ADODB, Vcl.Grids,
+  Vcl.DBGrids, Vcl.ExtCtrls, Vcl.StdCtrls, Vcl.Imaging.jpeg, PNGImage, INIFiles, ShlObj;
+
+type
+  TNewDisk = record
+    Title:Cardinal;
+    Title_Text:string;
+    Video:Cardinal;
+    Video_Text:string;
+    Disk:Cardinal;
+    Disk_Text:string;
+  end;
+
+  THistory = class(TStringList)
+    procedure AddLine(Line: string);
+    procedure AddList(List: TStrings);
+    procedure Load;
+    procedure Save;
+    public
+    FileName:string;
+  end;
+
+  TForm1 = class(TForm)
+    DB: TADOConnection;
+    Image1: TImage;
+    Button1: TButton;
+    Button2: TButton;
+    Button3: TButton;
+    Bevel1: TBevel;
+    Button4: TButton;
+    Button5: TButton;
+    Button6: TButton;
+    Bevel2: TBevel;
+    Button7: TButton;
+    Query: TADOQuery;
+    Button8: TButton;
+    procedure Button7Click(Sender: TObject);
+    procedure Button1Click(Sender: TObject);
+    procedure Button6Click(Sender: TObject);
+    procedure Button4Click(Sender: TObject);
+    procedure FormCreate(Sender: TObject);
+    procedure Button2Click(Sender: TObject);
+    procedure Button5Click(Sender: TObject);
+    procedure Button8Click(Sender: TObject);
+  private
+    function AppData:string;
+    procedure Backup;
+  public
+    procedure AddDisk;
+  end;
+
+  TWindowPosition = record
+    Left:integer;
+    Top:Integer;
+    Width:Integer;
+    Height:Integer;
+    Maximize:Boolean;
+    ReadOnly:boolean;
+  end;
+
+var
+  Form1: TForm1;
+  Canceled:boolean;
+  NewDisk:TNewDisk;
+  SQL_History:THistory;
+  Settings:TINIFile;
+
+const
+  PF='\СтД\DVD_Library\';
+
+implementation
+
+{$R *.dfm}
+
+uses SearchUnit, AdminUnit, AddTitle, AddVideo, AddDisk, PersUnit, ReportsUnit,
+  EditPersonsUnit;
+
+procedure TForm1.AddDisk;
+var
+  LastPrinted:integer;
+  TotalDisks:integer;
+  Delta:integer;
+begin
+if AddTitleForm.AddDisk_AddTitle then
+  if AddVideoForm.AddDisk_AddVideo then
+    if AddDiskForm.AddDisk_AddDisk then
+      begin
+      ShowMessage('Диск добавлен.');
+      LastPrinted:=Settings.ReadInteger('Print','Last-printed-No',-1);
+      Delta:=Settings.ReadInteger('Print','N-disks-to-print',-1);
+      with Query do
+        begin
+        SQL.Clear;
+        SQL.Add('SELECT COUNT([Номер в каталоге]) AS NDisk');
+        SQL.Add('FROM Список_дисков;');
+        Open;
+        TotalDisks:=FieldByName('NDisk').AsInteger;
+        end;
+      if LastPrinted+Delta<=TotalDisks then
+        begin
+        ShowMessage('Вы добавили уже '+IntToStr(TotalDisks-LastPrinted)+
+          ' дисков с момента последней распечатки списков.'#13#10'Рекомендуем Вам распечатать списки.');
+        end;
+      end;
+end;
+
+function TForm1.AppData:string;
+var
+  PItemID : PItemIDList;
+  ansiSbuf : array[0..MAX_PATH] of char;
+begin
+SHGetSpecialFolderLocation( Form1.Handle, CSIDL_APPDATA, PItemID );
+SHGetPathFromIDList( PItemID, @ansiSbuf[0] );
+AppData := ansiSbuf;
+end;
+
+procedure TForm1.Backup;
+var
+  ST:TSystemTime;
+  OldFile, NewFile:string;
+begin
+DateTimeToSystemTime(Now,ST);
+OldFile:=Settings.ReadString('DataBase','File','ERROR!!!');
+NewFile:=Settings.ReadString('Backup','Foldler','ERROR!!!')+
+ 'Backup_DVD_Lib_'+IntToStr(ST.wYear)+'-'+IntToStr(ST.wMonth)+'-'+IntToStr(ST.wDay)+'.mdb';
+CopyFile(PWideChar(WideString(OldFile)), PWideChar(WideString(NewFile)), true);
+
+Settings.WriteDate('Backup','Last',Date);
+end;
+
+procedure TForm1.Button1Click(Sender: TObject);
+begin
+SearchForm.SearchShow
+end;
+
+procedure TForm1.Button2Click(Sender: TObject);
+begin
+Persons.ShowPersons;
+end;
+
+procedure TForm1.Button4Click(Sender: TObject);
+begin
+AddDisk;
+end;
+
+procedure TForm1.Button5Click(Sender: TObject);
+begin
+Reports.ShowModal;
+end;
+
+procedure TForm1.Button6Click(Sender: TObject);
+begin
+AdminForm.Show;
+end;
+
+procedure TForm1.Button7Click(Sender: TObject);
+begin
+Application.Terminate;
+end;
+
+procedure TForm1.Button8Click(Sender: TObject);
+begin
+EditPersons.ShowEditPersona;
+end;
+
+procedure TForm1.FormCreate(Sender: TObject);
+var
+  ST:TTimeStamp;
+  DaysL, DaysN:Cardinal;
+begin
+if DB.Connected then DB.Connected:=false;
+
+SQL_History:=THistory.Create;
+SQL_History.FileName:='SQL.log';
+SQL_History.Load;
+
+//ShowMessage(AppData+' '+PF+'settings.ini');
+if not DirectoryExists(AppData+PF) then
+  ForceDirectories(AppData+PF);
+Settings:=TIniFile.Create(AppData+PF+'settings.ini');
+
+if Settings.ReadString('Backup','Foldler','@NONE@')='@NONE@' then
+  Settings.WriteString('Backup','Foldler','d:\Dropbox\Театр\DB\Backup\');
+if Settings.ReadString('Backup','Last','@NONE@')='@NONE@' then
+  Backup;
+ST :=  DateTimeToTimeStamp(Settings.ReadDate('Backup','Last',StrToDate('06.03.1989')));
+DaysL:=ST.Date;
+ST :=  DateTimeToTimeStamp(Date);
+DaysN:=ST.Date;
+if (DaysL+7)<=DaysN then Backup;
+
+DB.ConnectionString:='Provider=Microsoft.Jet.OLEDB.4.0;User ID=Admin;Data Source='+
+  Settings.ReadString('DataBase','File','ERROR!!!')+
+  ';Mode=Share Deny None;Jet OLEDB:System database="";Jet OLEDB:Registry Path="";'+
+  'Jet OLEDB:Database Password="";Jet OLEDB:Engine Type=5;Jet OLEDB:Database Locking Mode=1;'+
+  'Jet OLEDB:Global Partial Bulk Ops=2;Jet OLEDB:Global Bulk Transactions=1;'+
+  'Jet OLEDB:New Database Password="";Jet OLEDB:Create System Database=False;'+
+  'Jet OLEDB:Encrypt Database=False;Jet OLEDB:Don''t Copy Locale on Compact=False;'+
+  'Jet OLEDB:Compact Without Replica Repair=False;Jet OLEDB:SFP=False;';
+DB.Connected:=true;
+
+WS.ReadOnly:=true;
+WS.Left:=Settings.ReadInteger('Forms','Search-Left',0);
+WS.Top:=Settings.ReadInteger('Forms','Search-Top',0);
+WS.Width:=Settings.ReadInteger('Forms','Search-Width',964);
+WS.Height:=Settings.ReadInteger('Forms','Search-Height',465);
+WS.Maximize:=Settings.ReadBool('Forms','Search-Maximize',false);
+end;
+
+{ THistory }
+
+procedure THistory.AddLine(Line: string);
+begin
+Add('');
+Add('/*'+DateTimeToStr(Now)+'*/');
+
+Add(Line);
+
+Save;
+end;
+
+procedure THistory.AddList(List: TStrings);
+var
+  i:integer;
+begin
+Add('');
+Add('/*'+DateTimeToStr(Now)+'*/');
+
+for i := 0 to List.Count-1 do
+  Add(List[i]);
+
+Save;
+end;
+
+procedure THistory.Load;
+begin
+{LoadFromFile(FileName); }
+end;
+
+procedure THistory.Save;
+begin
+{SaveToFile(FileName); }
+end;
+
+end.
