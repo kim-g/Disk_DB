@@ -53,8 +53,12 @@ object History: THistory
       Top = 12
       Width = 356
       Height = 33
+      ItemIndex = 0
       TabOrder = 1
-      Text = 'CB'
+      Text = '-- '#1042#1057#1045' --'
+      OnChange = Edit1Change
+      Items.Strings = (
+        '-- '#1042#1057#1045' --')
     end
   end
   object Panel2: TPanel

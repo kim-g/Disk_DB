@@ -79,7 +79,10 @@ with Query.SQL do
   Add('  ON Список_Дисков.ID_Диска = Hist.диск');
   end;
 
-if Edit1.Text<>'' then Query.SQL.Add('WHERE Список_Дисков.[Номер в каталоге] = '+ Edit1.Text);
+if (Edit1.Text<>'') AND (CBS[CB.ItemIndex]='ALL') then Query.SQL.Add('WHERE Список_Дисков.[Номер в каталоге] = '+ Edit1.Text);
+if (Edit1.Text<>'') AND (CBS[CB.ItemIndex]<>'ALL') then Query.SQL.Add('WHERE (Список_Дисков.[Номер в каталоге] = '+ Edit1.Text + ')' +
+                                                                      'AND (Hist.TN = ' + CBS[CB.ItemIndex]+ ')');
+if (Edit1.Text='') AND (CBS[CB.ItemIndex]<>'ALL') then Query.SQL.Add('WHERE Hist.TN = ' + CBS[CB.ItemIndex]);
 
 
 Query.SQL.Add('ORDER BY История.Код_Операции;');
@@ -118,6 +121,9 @@ Query.Open;
 
 CB.Items.Clear;
 CBS.Clear;
+
+CB.Items.Add('-- ВСЕ --');
+CBS.Add('ALL');
 while not Query.Eof do
     begin
     CB.Items.Add(Query.FieldByName('Фамилия').AsString + ' ' + Query.FieldByName('Имя').AsString);
@@ -125,7 +131,7 @@ while not Query.Eof do
     Query.next;
     end;
   Query.Close;
-
+CB.ItemIndex:=0;
 GetData;
 ShowModal;
 end;
