@@ -97,13 +97,22 @@ object AdminForm: TAdminForm
         OnClick = Button2Click
       end
       object Button3: TButton
-        Left = 240
+        Left = 823
         Top = 0
         Width = 75
         Height = 25
         Caption = #1047#1072#1082#1088#1099#1090#1100
         TabOrder = 2
         OnClick = Button3Click
+      end
+      object Button4: TButton
+        Left = 240
+        Top = 0
+        Width = 169
+        Height = 25
+        Caption = #1042#1099#1087#1086#1083#1085#1080#1090#1100' '#1074#1085#1077#1096#1085#1080#1081' '#1089#1082#1088#1080#1087#1090
+        TabOrder = 3
+        OnClick = Button4Click
       end
     end
   end
@@ -123,5 +132,10 @@ object AdminForm: TAdminForm
     Parameters = <>
     Left = 792
     Top = 40
+  end
+  object OD: TOpenDialog
+    Filter = 'SQL Files (*.sql)|*.sql'
+    Left = 792
+    Top = 96
   end
 end

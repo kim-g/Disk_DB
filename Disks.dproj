@@ -77,10 +77,10 @@
         <VerInfo_IncludeVerInfo>true</VerInfo_IncludeVerInfo>
         <VerInfo_Locale>1049</VerInfo_Locale>
         <VerInfo_AutoIncVersion>true</VerInfo_AutoIncVersion>
-        <VerInfo_Build>6</VerInfo_Build>
-        <VerInfo_MinorVer>6</VerInfo_MinorVer>
+        <VerInfo_Build>7</VerInfo_Build>
+        <VerInfo_MinorVer>7</VerInfo_MinorVer>
         <VerInfo_MajorVer>0</VerInfo_MajorVer>
-        <VerInfo_Keys>CompanyName=Театр «Старый дом»;FileDescription=;FileVersion=0.6.0.6;InternalName=;LegalCopyright=;LegalTrademarks=;OriginalFilename=;ProductName=;ProductVersion=0.6.0.6;Comments=</VerInfo_Keys>
+        <VerInfo_Keys>CompanyName=Театр «Старый дом»;FileDescription=;FileVersion=0.7.0.7;InternalName=;LegalCopyright=;LegalTrademarks=;OriginalFilename=;ProductName=;ProductVersion=0.7;Comments=</VerInfo_Keys>
         <VerInfo_Debug>true</VerInfo_Debug>
         <DCC_RemoteDebug>false</DCC_RemoteDebug>
     </PropertyGroup>
