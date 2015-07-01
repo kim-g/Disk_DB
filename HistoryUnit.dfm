@@ -8,13 +8,15 @@ object History: THistory
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
-  Font.Height = -11
+  Font.Height = -21
   Font.Name = 'Tahoma'
   Font.Style = []
   OldCreateOrder = False
   Position = poMainFormCenter
+  OnCreate = FormCreate
+  OnDestroy = FormDestroy
   PixelsPerInch = 96
-  TextHeight = 13
+  TextHeight = 25
   object Panel1: TPanel
     Left = 0
     Top = 544
@@ -23,6 +25,37 @@ object History: THistory
     Align = alBottom
     BevelOuter = bvNone
     TabOrder = 0
+    object Label1: TLabel
+      Left = 10
+      Top = 16
+      Width = 123
+      Height = 25
+      Caption = #1053#1086#1084#1077#1088' '#1076#1080#1089#1082#1072
+    end
+    object Label2: TLabel
+      Left = 256
+      Top = 16
+      Width = 126
+      Height = 25
+      Caption = #1063#1083#1077#1085' '#1090#1088#1091#1087#1087#1099
+    end
+    object Edit1: TEdit
+      Left = 152
+      Top = 12
+      Width = 73
+      Height = 33
+      NumbersOnly = True
+      TabOrder = 0
+      OnChange = Edit1Change
+    end
+    object CB: TComboBox
+      Left = 400
+      Top = 12
+      Width = 356
+      Height = 33
+      TabOrder = 1
+      Text = 'CB'
+    end
   end
   object Panel2: TPanel
     Left = 0
@@ -33,10 +66,6 @@ object History: THistory
     BevelOuter = bvNone
     BorderWidth = 10
     TabOrder = 1
-    ExplicitLeft = 256
-    ExplicitTop = 336
-    ExplicitWidth = 185
-    ExplicitHeight = 41
     object DBGrid1: TDBGrid
       Left = 10
       Top = 10
@@ -47,7 +76,7 @@ object History: THistory
       TabOrder = 0
       TitleFont.Charset = DEFAULT_CHARSET
       TitleFont.Color = clWindowText
-      TitleFont.Height = -11
+      TitleFont.Height = -21
       TitleFont.Name = 'Tahoma'
       TitleFont.Style = []
     end

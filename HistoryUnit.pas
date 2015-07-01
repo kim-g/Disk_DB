@@ -5,7 +5,7 @@ interface
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.Grids, Vcl.DBGrids, Data.DB,
-  Data.Win.ADODB, Vcl.ExtCtrls;
+  Data.Win.ADODB, Vcl.ExtCtrls, Vcl.StdCtrls;
 
 type
   THistory = class(TForm)
@@ -14,16 +14,24 @@ type
     Query: TADOQuery;
     DBGrid1: TDBGrid;
     DataSource: TDataSource;
+    Edit1: TEdit;
+    Label1: TLabel;
+    Label2: TLabel;
+    CB: TComboBox;
     procedure ShowHistory;
     procedure Scale;
+    procedure Edit1Change(Sender: TObject);
+    procedure FormCreate(Sender: TObject);
+    procedure FormDestroy(Sender: TObject);
   private
-    { Private declarations }
+    procedure GetData;
   public
     { Public declarations }
   end;
 
 var
   History: THistory;
+  CBS:TStringList;
 
 implementation
 
@@ -33,14 +41,62 @@ uses MenuUnit;
 
 { THistory }
 
+procedure THistory.Edit1Change(Sender: TObject);
+begin
+GetData;
+end;
+
+procedure THistory.FormCreate(Sender: TObject);
+begin
+CBS:=TStringList.Create;
+end;
+
+procedure THistory.FormDestroy(Sender: TObject);
+begin
+CBS.Free;
+end;
+
+procedure THistory.GetData;
+begin
+Query.Active:=false;
+
+with Query.SQL do
+  begin
+  Clear;
+  Add('SELECT Hist.Код_Операции, Hist.Фамилия, Hist.GOT, Список_Дисков.[Номер в каталоге], История.дата');
+  Add('FROM Список_Дисков');
+  Add('  INNER JOIN');
+  Add('');
+  Add('    (SELECT История.Код_Операции, [Члены труппы].[Табельный номер] AS TN, [Члены труппы].Фамилия, [Операции]![Операция] & [ТаблицаПолА]![Значение] AS GOT, История.дата, История.диск');
+  Add('     FROM ТаблицаПолА');
+  Add('       INNER JOIN (Операции');
+  Add('         INNER JOIN ([Члены труппы]');
+  Add('           INNER JOIN История');
+  Add('           ON [Члены труппы].[Табельный номер] = История.Член_Труппы)');
+  Add('         ON Операции.Код_Операции = История.Операция)');
+  Add('       ON ТаблицаПолА.Код = [Члены труппы].Пол) AS Hist');
+  Add('');
+  Add('  ON Список_Дисков.ID_Диска = Hist.диск');
+  end;
+
+if Edit1.Text<>'' then Query.SQL.Add('WHERE Список_Дисков.[Номер в каталоге] = '+ Edit1.Text);
+
+
+Query.SQL.Add('ORDER BY История.Код_Операции;');
+
+Query.Active:=true;
+Scale;
+end;
+
 procedure THistory.Scale;
 var
   I: Integer;
 const
-  GridColNames: array [0..3] of string = ('Член труппы','Операция','Диск','Дата');
-  GridColWith: array [0..3] of integer = (100,70,50,100);
+  NRow = 5;
+  GridColNames: array [0..NRow-1] of string = ('','Член труппы','Операция','Диск','Дата');
+  GridColWith: array [0..NRow-1] of integer = (0,200,140,80,200);
 begin
-for I := 0 to 3 do
+for I := 0 to NRow-1 do
   begin
   DBGrid1.Columns[i].Title.Caption:=GridColNames[i];   // Изменение заголовков
   DBGrid1.Columns[i].Width:=GridColWith[i];            // и размеров.
@@ -55,31 +111,22 @@ Query.Active:=false;
 with Query.SQL do
   begin
   Clear;
-  Add('SELECT [Члены труппы].Фамилия, Операции.[Операция] & [ТаблицаПолА]![Значение] AS GOT, Список_Дисков.[Номер в каталоге], История.дата');
-  Add('FROM ((ТаблицаПолА');
-  Add('  INNER JOIN [Члены труппы] ON ТаблицаПолА.Код = [Члены труппы].Пол)');
-  Add('  INNER JOIN (Операции');
-  Add('    INNER JOIN История ON Операции.Код_Операции = История.Операция)');
-  Add('  ON [Члены труппы].[Табельный номер] = История.Член_Труппы)');
-  Add('  INNER JOIN Список_Дисков ON [Члены труппы].[Табельный номер] = Список_Дисков.Взят');
-  Add('ORDER BY История.Код_Операции;');
+  Add('SELECT * FROM [Члены труппы] WHERE (Действующий = TRUE) AND ([Табельный номер] > -1)');
   end;
 
-  {
-  SELECT История.Код_Операции, [Члены труппы].Фамилия, [Операции]![Операция] & [ТаблицаПолА]![Значение] AS GOT, История.дата
-  FROM ТаблицаПолА
-    INNER JOIN (Операции
-      INNER JOIN ([Члены труппы]
-        INNER JOIN (История
-          INNER JOIN Список_Дисков ON Список_Дисков.[Номер_В_Каталоге)
-          ON [Члены труппы].[Табельный номер] = История.Член_Труппы)
-      ON Операции.Код_Операции = История.Операция)
-    ON ТаблицаПолА.Код = [Члены труппы].Пол
-  ORDER BY История.Код_Операции;
-  }
+Query.Open;
 
-Query.Active:=true;
-Scale;
+CB.Items.Clear;
+CBS.Clear;
+while not Query.Eof do
+    begin
+    CB.Items.Add(Query.FieldByName('Фамилия').AsString + ' ' + Query.FieldByName('Имя').AsString);
+    CBS.Add(Query.FieldByName('Табельный номер').AsString);
+    Query.next;
+    end;
+  Query.Close;
+
+GetData;
 ShowModal;
 end;
 
