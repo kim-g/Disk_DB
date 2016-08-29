@@ -74,20 +74,20 @@ var
 const
   AllOther = 637;
   Common_SQL_Query:array[1..18] of String =
-    ('SELECT Список_Дисков.ID_Диска, Список_Дисков.[Номер в каталоге], Категории.Категория, Сюжеты.Название,',
-     '       Видеозаписи.Номер_Спектакля, Видеозаписи.Дата_Спектакля, МестоНаПолке.[Место на полке],',
-     '       Видеозаписи.Комментарий, [Члены труппы].Фамилия, Список_Дисков.Дата_Взятия',
+    ('SELECT disks.id, disks.n, category.cat, plots.name,',
+     '       records.n_play, records.date_play, places.place,',
+     '       records.comment, persons.surname, disks.got_date',
      '',
-     'FROM [Члены труппы]',
-     'INNER JOIN (Сюжеты',
-     '  INNER JOIN (МестоНаПолке',
-     '    INNER JOIN (Категории',
-     '      INNER JOIN (Видеозаписи',
-     '        INNER JOIN Список_Дисков ON Видеозаписи.ID_Видеозаписи = Список_Дисков.Видеозапись)',
-     '      ON Категории.ID = Видеозаписи.Категория)',
-     '    ON МестоНаПолке.ID = Видеозаписи.Место_на_полке)',
-     '  ON Сюжеты.ID_Сюжета = Видеозаписи.Сюжет)',
-     'ON [Члены труппы].[Табельный номер] = Список_Дисков.Взят',
+     'FROM persons',
+     'INNER JOIN (plots',
+     '  INNER JOIN (places',
+     '    INNER JOIN (category',
+     '      INNER JOIN (records',
+     '        INNER JOIN disks ON records.id = disks.record)',
+     '      ON Категории.ID = records.category)',
+     '    ON places.id = records.place)',
+     '  ON plots.id = records.plot)',
+     'ON persons.id = disks.got',
      '',
      'WHERE (FALSE',
      '',
@@ -95,8 +95,8 @@ const
 
   GridColNames: array [0..9] of string = ('ID', '№', 'Категория', 'Название', 'n', 'Дата', 'Место',
                                           'Комментарий', 'Взял', 'Дата');
-  OrderBy:array[0..3] of string = ('[Номер в каталоге]','Сюжеты.Название, Видеозаписи.Номер_Спектакля',
-                                   'Видеозаписи.Категория','[Члены труппы].Фамилия');
+  OrderBy:array[0..3] of string = ('disks.n','plots.name, records.n_play',
+                                   'records.category','persons.surname');
 
 implementation
 
@@ -140,7 +140,7 @@ procedure TSearchForm.DBGrid1DblClick(Sender: TObject);
 var
   N:Cardinal;
 begin
-N:=DBGrid1.DataSource.DataSet.FieldValues['ID_Диска'];
+N:=DBGrid1.DataSource.DataSet.FieldValues['id'];
 GetDisk.GetDisk(N);
 ACCESSQuery.Requery;
 end;
@@ -175,13 +175,13 @@ DiskName.Items.Clear;
 with SpQuery do
   begin
   SQL.Clear;
-  SQL.Add('SELECT [Название спектакля]');
-  SQL.Add('FROM Спектакли');
-  SQL.Add('ORDER BY ID;');
+  SQL.Add('SELECT name');
+  SQL.Add('FROM plays');
+  SQL.Add('ORDER BY id;');
   OPEN;
   while not EOF do
     begin
-    DiskName.Items.Add(FieldByName('Название спектакля').AsString);
+    DiskName.Items.Add(FieldByName('name').AsString);
     next;
     end;
   Close;
@@ -267,14 +267,14 @@ for i := 1 to 16 do
 
 //Доюавляем условие по категории
 for I := 1 to 10 do
-  if Cat[i].Checked then SQL_Query.Add('    OR Видеозаписи.Категория = '+IntToStr(i)+'');  //Проверяем флажки
+  if Cat[i].Checked then SQL_Query.Add('    OR records.category = '+IntToStr(i)+'');  //Проверяем флажки
 
 SQL_Query[SQL_Query.Count-1]:=SQL_Query[SQL_Query.Count-1]+')';  //Закрываем скобку
 //Добавлем условия по номеру и заголовку
 if NDiskEdit.Text<>'' then
-  SQL_Query.Add('  AND ([Номер в каталоге]='+NDiskEdit.Text+')');
+  SQL_Query.Add('  AND (n='+NDiskEdit.Text+')');
 if DiskName.Text<>'' then
-  SQL_Query.Add('  AND (Сюжеты.Название Like '+#39+'%'+DiskName.Text+'%'+#39+')');
+  SQL_Query.Add('  AND (plots.name Like '+#39+'%'+DiskName.Text+'%'+#39+')');
 
 //Добавляем ORDER BY
 SQL_Query.Add(Common_SQL_Query[17]);

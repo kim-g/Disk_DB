@@ -356,6 +356,7 @@ object SearchForm: TSearchForm
     Top = 16
   end
   object AccessQuery: TADOQuery
+    Active = True
     Connection = Form1.DB
     CursorType = ctStatic
     ParamCheck = False
@@ -395,6 +396,7 @@ object SearchForm: TSearchForm
     Top = 16
   end
   object SpQuery: TADOQuery
+    Active = True
     Connection = Form1.DB
     CursorType = ctStatic
     Parameters = <>

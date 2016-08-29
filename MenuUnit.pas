@@ -98,8 +98,8 @@ if AddTitleForm.AddDisk_AddTitle then
       with Query do
         begin
         SQL.Clear;
-        SQL.Add('SELECT COUNT([Номер в каталоге]) AS NDisk');
-        SQL.Add('FROM Список_дисков;');
+        SQL.Add('SELECT COUNT(*) AS NDisk');
+        SQL.Add('FROM disks;');
         Open;
         TotalDisks:=FieldByName('NDisk').AsInteger;
         end;
@@ -201,14 +201,14 @@ ST :=  DateTimeToTimeStamp(Date);
 DaysN:=ST.Date;
 if (DaysL+7)<=DaysN then Backup;
 
-DB.ConnectionString:='Provider=Microsoft.Jet.OLEDB.4.0;User ID=Admin;Data Source='+
+{DB.ConnectionString:='Provider=Microsoft.Jet.OLEDB.4.0;User ID=Admin;Data Source='+
   Settings.ReadString('DataBase','File','ERROR!!!')+
   ';Mode=Share Deny None;Jet OLEDB:System database="";Jet OLEDB:Registry Path="";'+
   'Jet OLEDB:Database Password="";Jet OLEDB:Engine Type=5;Jet OLEDB:Database Locking Mode=1;'+
   'Jet OLEDB:Global Partial Bulk Ops=2;Jet OLEDB:Global Bulk Transactions=1;'+
   'Jet OLEDB:New Database Password="";Jet OLEDB:Create System Database=True;'+
   'Jet OLEDB:Encrypt Database=False;Jet OLEDB:Don''t Copy Locale on Compact=False;'+
-  'Jet OLEDB:Compact Without Replica Repair=False;Jet OLEDB:SFP=False;';
+  'Jet OLEDB:Compact Without Replica Repair=False;Jet OLEDB:SFP=False;';       }
 DB.Connected:=true;
 
 WS.ReadOnly:=true;

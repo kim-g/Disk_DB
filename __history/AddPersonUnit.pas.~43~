@@ -33,12 +33,12 @@ type
     Label9: TLabel;
     procedure Add;
     procedure Edit1Change(Sender: TObject);
-    procedure CancelOK;
     procedure EnableOK;
     procedure Button2Click(Sender: TObject);
     procedure Edit2Change(Sender: TObject);
     procedure Edit3Change(Sender: TObject);
     procedure RB1Click(Sender: TObject);
+    procedure Button1Click(Sender: TObject);
   private
     { Private declarations }
   public
@@ -47,15 +47,22 @@ type
 
 var
   AddPerson: TAddPerson;
+  Ready: array [1..4] of boolean;
 
 implementation
 
 {$R *.dfm}
 
-uses MenuUnit;
+uses MenuUnit, EditPersonsUnit;
 
 procedure TAddPerson.Add;
 begin
+Edit1.Text:='';
+Edit2.Text:='';
+Edit3.Text:='';
+Edit4.Text:='';
+RB1.Checked:=false;
+RB2.Checked:=false;
 Edit1Change(AddPerson);
 Edit2Change(AddPerson);
 Edit3Change(AddPerson);
@@ -63,14 +70,30 @@ RB1Click(AddPerson);
 ShowModal;
 end;
 
+procedure TAddPerson.Button1Click(Sender: TObject);
+var
+  Sex:string;
+begin
+
+if RB1.Checked then Sex:='1' else Sex:='2';
+
+
+Query.Active:=false;
+with Query.SQL do
+  begin
+  clear;
+  Add('INSERT INTO [Члены труппы] ([Табельный номер], Фамилия, Имя, Отчество, Действующий, Пол)');
+  Add('VALUES (' + Edit1.Text + ', "' + Edit2.Text + '", "' + Edit3.Text + '", "' + Edit4.Text + '", TRUE, ' + Sex + ');');
+  end;
+
+Query.ExecSQL;
+EditPersons.TableQuery.Requery;
+close;
+end;
+
 procedure TAddPerson.Button2Click(Sender: TObject);
 begin
 Close;
-end;
-
-procedure TAddPerson.CancelOK;
-begin
-Button1.Enabled:=false;
 end;
 
 procedure TAddPerson.Edit1Change(Sender: TObject);
@@ -82,7 +105,8 @@ if Edit1.Text='' then
   Image1.Picture.LoadFromFile('NO.png');
   Label2.Caption:='Введите табельный номер.';
   Label2.Visible:=true;
-  CancelOK;
+  Ready[1]:=false;
+  EnableOK;
   exit;
   end;
 
@@ -98,13 +122,15 @@ N_Records := Query.FieldByName('NRec').AsInteger;
 
 if N_Records > 0 then
   begin
-  CancelOK;
+  Ready[1]:=false;
+  EnableOK;
   Image1.Picture.LoadFromFile('NO.png');
   Label2.Caption:='Табельный номер уже используется.';
   Label2.Visible:=true;
   exit;
   end;
 
+Ready[1]:=true;
 EnableOK;
 Label2.Hide;
 Image1.Picture.LoadFromFile('OK.png');
@@ -117,10 +143,12 @@ if Edit2.Text='' then
   Image2.Picture.LoadFromFile('NO.png');
   Label4.Caption:='Введите фамилию.';
   Label4.Visible:=true;
-  CancelOK;
+  Ready[2]:=false;
+  EnableOK;
   exit;
   end;
 
+Ready[2]:=true;
 EnableOK;
 Label4.Hide;
 Image2.Picture.LoadFromFile('OK.png');
@@ -133,10 +161,12 @@ if Edit3.Text='' then
   Image3.Picture.LoadFromFile('NO.png');
   Label6.Caption:='Введите имя.';
   Label6.Visible:=true;
-  CancelOK;
+  Ready[3]:=false;
+  EnableOK;
   exit;
   end;
 
+Ready[3]:=true;
 EnableOK;
 Label6.Hide;
 Image3.Picture.LoadFromFile('OK.png');
@@ -144,8 +174,13 @@ end;
 
 procedure TAddPerson.EnableOK;
 begin
-Button1.Enabled:=true;
-Button1.Default:=true;
+if Ready[1] and Ready[2] and Ready[3] and Ready[4] then
+  begin
+  Button1.Enabled:=true;
+  Button1.Default:=true;
+  end
+ else
+  Button1.Enabled:=false;
 end;
 
 procedure TAddPerson.RB1Click(Sender: TObject);
@@ -155,10 +190,12 @@ if not (RB1.Checked xor RB2.Checked) then
   Image4.Picture.LoadFromFile('NO.png');
   Label9.Caption:='Выберите пол.';
   Label9.Visible:=true;
-  CancelOK;
+  Ready[4]:=false;
+  EnableOK;
   exit;
   end;
 
+Ready[4]:=true;
 EnableOK;
 Label9.Hide;
 Image4.Picture.LoadFromFile('OK.png');
