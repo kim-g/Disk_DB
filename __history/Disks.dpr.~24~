@@ -15,9 +15,7 @@ uses
   EditPersonsUnit in 'EditPersonsUnit.pas' {EditPersons},
   AddPersonUnit in 'AddPersonUnit.pas' {AddPerson},
   ChangeNumberUnit in 'ChangeNumberUnit.pas' {ChangeNumber},
-  HistoryUnit in 'HistoryUnit.pas' {History},
-  SQLite3 in 'SQLite3.pas',
-  SQLiteTable3 in 'SQLiteTable3.pas';
+  HistoryUnit in 'HistoryUnit.pas' {History};
 
 {$R *.res}
 

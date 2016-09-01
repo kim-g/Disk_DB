@@ -162,6 +162,8 @@
             <Form>History</Form>
             <FormType>dfm</FormType>
         </DCCReference>
+        <DCCReference Include="SQLite3.pas"/>
+        <DCCReference Include="SQLiteTable3.pas"/>
         <None Include="HistSQL_Temp.sql"/>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>
