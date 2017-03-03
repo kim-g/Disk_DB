@@ -58,7 +58,8 @@ with Query do
   SQL.Clear;
   SQL.Add('SELECT [Табельный номер], Фамилия & " " & Имя AS Персона');
   SQL.Add('FROM [Члены труппы]');
-  SQL.Add('WHERE Действующий = TRUE;');
+  SQL.Add('WHERE Действующий = TRUE');
+  SQL.Add('ORDER BY [Табельный номер];');
 
   Open;
   Got.Items.Clear;

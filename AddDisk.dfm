@@ -55,15 +55,13 @@ object AddDiskForm: TAddDiskForm
     object Label2: TLabel
       Left = 2
       Top = 2
-      Width = 453
-      Height = 53
+      Width = 46
+      Height = 19
       Align = alClient
       Alignment = taCenter
       Caption = 'Label2'
       Layout = tlCenter
       WordWrap = True
-      ExplicitWidth = 46
-      ExplicitHeight = 19
     end
   end
   object Got: TComboBox
