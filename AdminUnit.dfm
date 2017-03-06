@@ -116,26 +116,27 @@ object AdminForm: TAdminForm
       end
     end
   end
-  object Query: TADOQuery
-    Connection = Form1.DB
-    Parameters = <>
-    Left = 848
-    Top = 40
-  end
   object DataSource: TDataSource
-    DataSet = Query
     Left = 848
     Top = 96
-  end
-  object RunQuery: TADOQuery
-    Connection = Form1.DB
-    Parameters = <>
-    Left = 792
-    Top = 40
   end
   object OD: TOpenDialog
     Filter = 'SQL Files (*.sql)|*.sql'
     Left = 792
     Top = 96
+  end
+  object Query: TSQLQuery
+    MaxBlobSize = -1
+    Params = <>
+    SQLConnection = Form1.DB
+    Left = 848
+    Top = 40
+  end
+  object RunQuery: TSQLQuery
+    MaxBlobSize = -1
+    Params = <>
+    SQLConnection = Form1.DB
+    Left = 792
+    Top = 48
   end
 end

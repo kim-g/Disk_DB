@@ -151,10 +151,11 @@ object AddVideoForm: TAddVideoForm
     Height = 17
     TabOrder = 9
   end
-  object Query: TADOQuery
-    Connection = Form1.DB
-    Parameters = <>
-    Left = 688
-    Top = 8
+  object Query: TSQLQuery
+    MaxBlobSize = -1
+    Params = <>
+    SQLConnection = Form1.DB
+    Left = 640
+    Top = 64
   end
 end

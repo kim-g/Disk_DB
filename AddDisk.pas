@@ -5,7 +5,7 @@ interface
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.ExtCtrls, Data.DB,
-  Data.Win.ADODB;
+  Data.Win.ADODB, Data.FMTBcd, Data.SqlExpr;
 
 type
   TAddDiskForm = class(TForm)
@@ -18,7 +18,7 @@ type
     Bevel1: TBevel;
     Button1: TButton;
     Button2: TButton;
-    Query: TADOQuery;
+    Query: TSQLQuery;
     procedure Button1Click(Sender: TObject);
     function AddDisk_AddDisk:boolean;
     procedure FormCreate(Sender: TObject);

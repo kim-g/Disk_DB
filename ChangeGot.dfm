@@ -78,26 +78,25 @@ object GetDisk: TGetDisk
     TabOrder = 2
     OnClick = Button2Click
   end
-  object PersList: TADOQuery
-    Connection = Form1.DB
-    Parameters = <>
-    SQL.Strings = (
-      'SELECT ['#1058#1072#1073#1077#1083#1100#1085#1099#1081' '#1085#1086#1084#1077#1088'], '#1060#1072#1084#1080#1083#1080#1103' & " " '#1048#1084#1103' AS '#1042#1079#1103#1083
-      'FROM ['#1063#1083#1077#1085#1099' '#1090#1088#1091#1087#1087#1099']'
-      'ORDER BY '#1042#1079#1103#1083';')
-    Left = 328
-    Top = 8
+  object RUN_SQL: TSQLQuery
+    MaxBlobSize = -1
+    Params = <>
+    SQLConnection = Form1.DB
+    Left = 32
+    Top = 24
   end
-  object SelDisk: TADOQuery
-    Connection = Form1.DB
-    Parameters = <>
-    Left = 328
-    Top = 56
+  object PersList: TSQLQuery
+    MaxBlobSize = -1
+    Params = <>
+    SQLConnection = Form1.DB
+    Left = 88
+    Top = 24
   end
-  object RUN_SQL: TADOQuery
-    Connection = Form1.DB
-    Parameters = <>
-    Left = 280
-    Top = 8
+  object SelDisk: TSQLQuery
+    MaxBlobSize = -1
+    Params = <>
+    SQLConnection = Form1.DB
+    Left = 224
+    Top = 32
   end
 end

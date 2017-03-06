@@ -93,9 +93,11 @@ object AddDiskForm: TAddDiskForm
     TabOrder = 4
     OnClick = Button2Click
   end
-  object Query: TADOQuery
-    Connection = Form1.DB
-    Parameters = <>
-    Left = 440
+  object Query: TSQLQuery
+    MaxBlobSize = -1
+    Params = <>
+    SQLConnection = Form1.DB
+    Left = 376
+    Top = 8
   end
 end

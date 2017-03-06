@@ -56,10 +56,11 @@ object Persons: TPersons
       OnDblClick = ListDblClick
     end
   end
-  object Query: TADOQuery
-    Connection = Form1.DB
-    Parameters = <>
-    Left = 664
-    Top = 8
+  object Query: TSQLQuery
+    MaxBlobSize = -1
+    Params = <>
+    SQLConnection = Form1.DB
+    Left = 600
+    Top = 72
   end
 end

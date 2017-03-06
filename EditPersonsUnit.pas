@@ -11,14 +11,14 @@ type
   TEditPersons = class(TForm)
     Panel1: TPanel;
     Panel2: TPanel;
-    TableQuery: TADOQuery;
     TableDataSource: TDataSource;
     DBGrid1: TDBGrid;
     RadioGroup1: TRadioGroup;
     Button1: TButton;
     Button2: TButton;
-    Query: TADOQuery;
     Button3: TButton;
+    Query: TSQLQuery;
+    TableQuery: TSQLQuery;
 
     procedure ShowEditPersona;
     procedure OnlyUpdate(Sender:TObject);
@@ -87,7 +87,7 @@ if GotDisks=0 then
       end;
     Query.ExecSQL;
     ShowMessage('Запись удалена.');
-    TableQuery.Requery;
+    TableQuery.Refresh;
     end;
 
   end

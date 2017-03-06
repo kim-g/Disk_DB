@@ -6,7 +6,7 @@ uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Data.DB, Data.Win.ADODB, Vcl.Grids,
   Vcl.DBGrids, Vcl.ExtCtrls, Vcl.StdCtrls, Vcl.Imaging.jpeg, PNGImage, INIFiles, ShlObj,
-  sqlite3;
+  sqlite3, Data.FMTBcd, Data.SqlExpr, Data.DbxSqlite;
 
 type
   TNewDisk = record
@@ -28,7 +28,6 @@ type
   end;
 
   TForm1 = class(TForm)
-    DB: TADOConnection;
     Image1: TImage;
     Button1: TButton;
     Button2: TButton;
@@ -39,8 +38,9 @@ type
     Button6: TButton;
     Bevel2: TBevel;
     Button7: TButton;
-    Query: TADOQuery;
     Button8: TButton;
+    DB: TSQLConnection;
+    Query: TSQLQuery;
     procedure Button7Click(Sender: TObject);
     procedure Button1Click(Sender: TObject);
     procedure Button6Click(Sender: TObject);
@@ -202,15 +202,14 @@ ST :=  DateTimeToTimeStamp(Date);
 DaysN:=ST.Date;
 if (DaysL+7)<=DaysN then Backup;
 
-DB.ConnectionString:='Provider=Microsoft.Jet.OLEDB.4.0;User ID=Admin;Data Source='+
-  Settings.ReadString('DataBase','File','ERROR!!!')+
-  ';Mode=Share Deny None;Jet OLEDB:System database="";Jet OLEDB:Registry Path="";'+
-  'Jet OLEDB:Database Password="";Jet OLEDB:Engine Type=5;Jet OLEDB:Database Locking Mode=1;'+
-  'Jet OLEDB:Global Partial Bulk Ops=2;Jet OLEDB:Global Bulk Transactions=1;'+
-  'Jet OLEDB:New Database Password="";Jet OLEDB:Create System Database=True;'+
-  'Jet OLEDB:Encrypt Database=False;Jet OLEDB:Don''t Copy Locale on Compact=False;'+
-  'Jet OLEDB:Compact Without Replica Repair=False;Jet OLEDB:SFP=False;';
-DB.Connected:=true;
+DB.ConnectionName := 'SQLITECONNECTION';
+  DB.DriverName:='Sqlite';
+  DB.LoginPrompt:= false;
+  DB.Params.Values['Host']:='localhost';
+  DB.Params.Values['FailIfMissing']:='False';
+  DB.Params.Values['ColumnMetaDataSupported']:='False';
+  DB.Params.Values['Database']:=Settings.ReadString('DataBase','File','ERROR!!!');
+  DB.Open;
 
 WS.ReadOnly:=true;
 WS.Left:=Settings.ReadInteger('Forms','Search-Left',0);

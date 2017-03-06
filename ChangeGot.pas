@@ -5,18 +5,18 @@ interface
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Data.DB, Data.Win.ADODB, Vcl.StdCtrls,
-  Vcl.DBCtrls, Vcl.ExtCtrls;
+  Vcl.DBCtrls, Vcl.ExtCtrls, Data.FMTBcd, Data.SqlExpr;
 
 type
   TGetDisk = class(TForm)
-    PersList: TADOQuery;
     Pers: TComboBox;
-    SelDisk: TADOQuery;
     Panel1: TPanel;
     Label1: TLabel;
     Button1: TButton;
     Button2: TButton;
-    RUN_SQL: TADOQuery;
+    RUN_SQL: TSQLQuery;
+    PersList: TSQLQuery;
+    SelDisk: TSQLQuery;
 
     procedure GetDisk(NDisk:Cardinal);
     procedure FormCreate(Sender: TObject);

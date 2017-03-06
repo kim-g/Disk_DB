@@ -68,14 +68,11 @@ object AddTitleForm: TAddTitleForm
     TabOrder = 4
     OnClick = Button3Click
   end
-  object Query: TADOQuery
-    Connection = Form1.DB
-    Parameters = <>
-    SQL.Strings = (
-      'SELECT ID_'#1057#1102#1078#1077#1090#1072', '#1053#1072#1079#1074#1072#1085#1080#1077
-      'FROM '#1057#1102#1078#1077#1090#1099
-      'ORDER BY '#1053#1072#1079#1074#1072#1085#1080#1077';')
-    Left = 664
-    Top = 184
+  object Query: TSQLQuery
+    MaxBlobSize = -1
+    Params = <>
+    SQLConnection = Form1.DB
+    Left = 648
+    Top = 240
   end
 end

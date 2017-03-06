@@ -116,16 +116,18 @@ object ChangeNumber: TChangeNumber
     TabOrder = 2
     OnClick = Button2Click
   end
-  object Query: TADOQuery
-    Connection = Form1.DB
-    Parameters = <>
-    Left = 296
-    Top = 56
-  end
-  object InBase: TADOQuery
-    Connection = Form1.DB
-    Parameters = <>
+  object InBase: TSQLQuery
+    MaxBlobSize = -1
+    Params = <>
+    SQLConnection = Form1.DB
     Left = 8
+    Top = 64
+  end
+  object Query: TSQLQuery
+    MaxBlobSize = -1
+    Params = <>
+    SQLConnection = Form1.DB
+    Left = 296
     Top = 64
   end
 end

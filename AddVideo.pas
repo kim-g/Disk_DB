@@ -5,11 +5,10 @@ interface
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Data.DB, Data.Win.ADODB, Vcl.StdCtrls,
-  Vcl.ExtCtrls, Vcl.ComCtrls;
+  Vcl.ExtCtrls, Vcl.ComCtrls, Data.FMTBcd, Data.SqlExpr;
 
 type
   TAddVideoForm = class(TForm)
-    Query: TADOQuery;
     List: TListBox;
     LabelPanel: TPanel;
     Kat: TComboBox;
@@ -25,6 +24,7 @@ type
     Button2: TButton;
     Button1: TButton;
     DCheck: TCheckBox;
+    Query: TSQLQuery;
 
     function AddDisk_AddVideo:boolean;
     procedure FormCreate(Sender: TObject);

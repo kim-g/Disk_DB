@@ -726,22 +726,15 @@ object Form1: TForm1
     TabOrder = 7
     OnClick = Button8Click
   end
-  object DB: TADOConnection
-    Connected = True
-    ConnectionString = 
-      'Provider=Microsoft.Jet.OLEDB.4.0;Password="";Data Source=D:\Drop' +
-      'box\'#1058#1077#1072#1090#1088'\DB\ACCESS DB\DVD-'#1073#1080#1073#1083#1080#1086#1090#1077#1082#1072'.mdb;Persist Security Info=' +
-      'True'
-    LoginPrompt = False
-    Mode = cmShareDenyNone
-    Provider = 'Microsoft.Jet.OLEDB.4.0'
+  object DB: TSQLConnection
     Left = 336
-    Top = 8
+    Top = 16
   end
-  object Query: TADOQuery
-    Connection = DB
-    Parameters = <>
+  object Query: TSQLQuery
+    MaxBlobSize = -1
+    Params = <>
+    SQLConnection = DB
     Left = 336
-    Top = 56
+    Top = 64
   end
 end

@@ -5,7 +5,7 @@ interface
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.ExtCtrls, Data.DB,
-  Data.Win.ADODB;
+  Data.Win.ADODB, Data.FMTBcd, Data.SqlExpr;
 
 type
   TPersons = class(TForm)
@@ -13,7 +13,7 @@ type
     Panel2: TPanel;
     List: TListBox;
     ActivePers: TCheckBox;
-    Query: TADOQuery;
+    Query: TSQLQuery;
     procedure FormCreate(Sender: TObject);
     procedure ActivePersClick(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);

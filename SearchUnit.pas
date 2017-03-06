@@ -7,14 +7,14 @@ uses
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Data.DB, Data.Win.ADODB, Vcl.ExtCtrls,
   Vcl.StdCtrls, Vcl.DBCtrls, Vcl.Grids, Vcl.DBGrids, Data.Bind.EngExt,
   Vcl.Bind.DBEngExt, System.Rtti, System.Bindings.Outputs, Vcl.Bind.Editors,
-  Data.Bind.Components, MenuUnit, Data.Bind.DBScope, frxClass, frxDBSet;
+  Data.Bind.Components, MenuUnit, Data.Bind.DBScope, frxClass, frxDBSet,
+  Data.FMTBcd, Data.SqlExpr;
 
 type
   TSearchForm = class(TForm)
     ListPanel: TPanel;
     SearchPanel: TPanel;
     DataSource: TDataSource;
-    AccessQuery: TADOQuery;
     DBGrid1: TDBGrid;
     Order: TRadioGroup;
     Panel1: TPanel;
@@ -22,7 +22,6 @@ type
     NDiskEdit: TEdit;
     Label2: TLabel;
     SpName: TDataSource;
-    SpQuery: TADOQuery;
     GroupBox1: TGroupBox;
     Panel2: TPanel;
     CheckBox1: TCheckBox;
@@ -43,6 +42,8 @@ type
     Report: TfrxReport;
     DS: TfrxDBDataset;
     Button4: TButton;
+    SpQuery: TSQLQuery;
+    AccessQuery: TSQLQuery;
     procedure FormCreate(Sender: TObject);
     procedure Button1Click(Sender: TObject);
     procedure NDiskEditChange(Sender: TObject);
@@ -142,7 +143,7 @@ var
 begin
 N:=DBGrid1.DataSource.DataSet.FieldValues['ID_Диска'];
 GetDisk.GetDisk(N);
-ACCESSQuery.Requery;
+ACCESSQuery.Refresh;
 end;
 
 procedure TSearchForm.FormCanResize(Sender: TObject; var NewWidth,

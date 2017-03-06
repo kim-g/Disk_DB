@@ -5,7 +5,7 @@ interface
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, PNGImage, Vcl.ExtCtrls,
-  Data.DB, Data.Win.ADODB;
+  Data.DB, Data.Win.ADODB, Data.FMTBcd, Data.SqlExpr;
 
 type
   TAddPerson = class(TForm)
@@ -14,7 +14,6 @@ type
     Image1: TImage;
     Button1: TButton;
     Button2: TButton;
-    Query: TADOQuery;
     Label2: TLabel;
     Label3: TLabel;
     Edit2: TEdit;
@@ -31,6 +30,7 @@ type
     RB2: TRadioButton;
     Image4: TImage;
     Label9: TLabel;
+    Query: TSQLQuery;
     procedure Add;
     procedure Edit1Change(Sender: TObject);
     procedure EnableOK;
@@ -87,7 +87,7 @@ with Query.SQL do
   end;
 
 Query.ExecSQL;
-EditPersons.TableQuery.Requery;
+EditPersons.TableQuery.Refresh;
 close;
 end;
 

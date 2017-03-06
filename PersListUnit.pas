@@ -5,16 +5,16 @@ interface
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Data.DB, Data.Win.ADODB, Vcl.ExtCtrls,
-  Vcl.Grids, Vcl.DBGrids;
+  Vcl.Grids, Vcl.DBGrids, Data.FMTBcd, Data.SqlExpr;
 
 type
   TPersList = class(TForm)
     Panel1: TPanel;
     Panel2: TPanel;
     Panel3: TPanel;
-    Query: TADOQuery;
     DataSource1: TDataSource;
     DBGrid1: TDBGrid;
+    Query: TSQLQuery;
     procedure DBGrid1DblClick(Sender: TObject);
   private
     { Private declarations }
@@ -43,7 +43,7 @@ var
 begin
 N:=DBGrid1.DataSource.DataSet.FieldValues['ID_Диска'];
 GetDisk.GetDisk(N);
-Query.Requery;
+Query.Refresh;
 end;
 
 procedure TPersList.ShowPerson(ID: Integer; Person: string);

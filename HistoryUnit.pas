@@ -5,19 +5,19 @@ interface
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.Grids, Vcl.DBGrids, Data.DB,
-  Data.Win.ADODB, Vcl.ExtCtrls, Vcl.StdCtrls;
+  Data.Win.ADODB, Vcl.ExtCtrls, Vcl.StdCtrls, Data.FMTBcd, Data.SqlExpr;
 
 type
   THistory = class(TForm)
     Panel1: TPanel;
     Panel2: TPanel;
-    Query: TADOQuery;
     DBGrid1: TDBGrid;
     DataSource: TDataSource;
     Edit1: TEdit;
     Label1: TLabel;
     Label2: TLabel;
     CB: TComboBox;
+    Query: TSQLQuery;
     procedure ShowHistory;
     procedure Scale;
     procedure Edit1Change(Sender: TObject);

@@ -1,13 +1,6 @@
 ﻿[Panel1]
 Coordinates=428,10,54,58
 
-[AccessQuery]
-Coordinates=10,10,113,278
-
-[SpQuery]
-Coordinates=267,20,124,80
-Visible=True
-
 [Label2]
 Coordinates=267,10,53,58
 
@@ -24,8 +17,9 @@ Coordinates=492,10,53,58
 Coordinates=330,10,88,58
 
 []
-Coordinates=142,1,74,58
+Coordinates=10,10,113,278
 ExplicitSubNodes=Items.Text
+Visible=True
 
 [NDiskEdit]
 Coordinates=180,298,71,58

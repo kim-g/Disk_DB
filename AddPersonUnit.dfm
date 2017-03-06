@@ -202,10 +202,11 @@ object AddPerson: TAddPerson
     TabOrder = 5
     OnClick = RB1Click
   end
-  object Query: TADOQuery
-    Connection = Form1.DB
-    Parameters = <>
-    Left = 584
+  object Query: TSQLQuery
+    MaxBlobSize = -1
+    Params = <>
+    SQLConnection = Form1.DB
+    Left = 576
     Top = 8
   end
 end
